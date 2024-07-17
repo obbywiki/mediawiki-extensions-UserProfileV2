@@ -1,0 +1,67 @@
+{
+	"name": "UserProfileV2",
+	"author": [
+		"Telepedia Ltd"
+	],
+	"version": "0.0.0",
+	"url": "https://gitlab.com/telepedia/extensions/userprofilev2",
+	"descriptionmsg": "userprofilev2-desc",
+	"license-name": "Proprietary",
+	"type": "telepedia",
+	"requires": {
+		"MediaWiki": ">= 1.41.0",
+		"platform": {
+			"php": ">= 8.0"
+		}
+	},
+	"AutoloadNamespaces": {
+		"Telepedia\\UserProfileV2\\": "includes"
+	},
+	"MessagesDirs": {
+		"UserProfileV2": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"UserProfileV2Aliases": "UserProfileV2.alias.php"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": ""
+	},
+	"AvailableRights": [
+		"editprofile",
+		"profilemanager"
+	],
+	"GroupPermissions": {
+		"*": {
+			"editprofile": false,
+			"profilemanager": false
+		},
+		"user": {
+			"editprofile": true,
+			"profilemanager": false
+		}
+	},
+	"namespaces": [
+		{
+			"id": 2,
+			"constant": "NS_USER",
+			"name": "User",
+			"protection": "edit"
+		}
+	],
+	"Hooks": {
+		"ArticleFromTitle": "main",
+		"GetPreferences": "main"
+	},
+	"HookHandlers": {
+		"main": {
+			"class": "Telepedia\\UserProfileV2\\Hooks\\Hooks"
+		}
+	},
+	"ConfigRegistry": {
+		"UserProfileV2": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
+	},
+	"manifest_version": 2
+}
