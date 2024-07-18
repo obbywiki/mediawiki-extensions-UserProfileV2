@@ -72,6 +72,7 @@
 			]
 		},
 		"ext.userProfileV2.styles": {
+			"class": "Telepedia\\UserProfileV2\\UserProfileV2Module",
 			"styles": [
 				"css/ext.userProfileV2.less"
 			]
@@ -79,7 +80,7 @@
 	},
 	"APIListModules": {
 		"queryuserprofilev2": {
-			"class": "Telepedia\\UserProfileV2\\API\\QueryUserProfileV2",
+			"class": "Telepedia\\UserProfileV2\\Api\\QueryUserProfileV2",
 			"services": [
 				"UserOptionsLookup",
 				"UserFactory"
@@ -97,6 +98,20 @@
 	},
 	"ConfigRegistry": {
 		"UserProfileV2": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
+	},
+	"config": {
+		"UserProfileV2Color": {
+			"value": "#E1E1E1",
+			"path": false,
+			"description": "Accent colour used for the background of user group tags",
+			"public": true
+		},
+		"UserProfileV2AvatarBorderRadius": {
+			"value": "50%",
+			"path": false,
+			"description": "Accent colour used for the background of user group tags",
+			"public": true
+		}
 	},
 	"manifest_version": 2
 }
