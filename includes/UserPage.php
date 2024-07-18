@@ -23,16 +23,16 @@ class UserPage extends Article {
 	/** @var mixed|\IContextSource */
 	private mixed $context;
 
-	public function __construct(Title $title) {
+	public function __construct( Title $title ) {
 		$userFactory = MediaWikiServices::getInstance()->getUserFactory();
-		$this->mUserProfile = $userFactory->newFromName($title->getBaseText());
+		$this->mUserProfile = $userFactory->newFromName( $title->getBaseText() );
 
 		$this->context = $this->getContext();
 		$this->mViewer = $this->context->getUser();
 
-		$this->mIsOwner = ($this->mUserProfile->getId() == $this->mViewer->getId());
+		$this->mIsOwner = ( $this->mUserProfile->getId() == $this->mViewer->getId() );
 
-		parent::__construct($title);
+		parent::__construct( $title );
 	}
 
 	/**
@@ -44,6 +44,7 @@ class UserPage extends Article {
 	}
 
 	#[Override]
+
 	/**
 	 * The main function to show our page
 	 * @return void
@@ -56,58 +57,57 @@ class UserPage extends Article {
 
 		// if this user doesn't exist, bail early without loading our css or js
 		// and just show the regular 'user doesn't exist' message from core.
-		if (!$this->mUserProfile->getUser()->isRegistered()) {
+		if ( !$this->mUserProfile->getUser()->isRegistered() ) {
 			parent::view();
 			return;
 		}
 
 		// set the page title
-		$output->setPageTitle($this->getTitle()->getPrefixedText());
-		$output->addModuleStyles(['ext.userProfileV2.styles']);
-		$output->addModules(['ext.userProfileV2.edit']);
+		$output->setPageTitle( $this->getTitle()->getPrefixedText() );
+		$output->addModuleStyles( [ 'ext.userProfileV2.styles' ] );
+		$output->addModules( [ 'ext.userProfileV2.edit' ] );
 
-		$output->addHTML(self::getProfileLayout());
+		$output->addHTML( self::getProfileLayout() );
 	}
 
 	private function getProfileLayout() {
-
 		$html = Html::openElement(
 			"div",
-			["class" => "profile-masthead"]
+			[ "class" => "profile-masthead" ]
 		);
 		$html .= Html::openElement(
 			"div",
-			["class" => "profile-wrapper"]
+			[ "class" => "profile-wrapper" ]
 		);
 		$html .= Html::openElement(
 			"section",
-			["class" => "profile-identitybox"]
+			[ "class" => "profile-identitybox" ]
 		);
 		$html .= Html::openElement(
 			"div",
-			["class" => "profile-avatar"]
+			[ "class" => "profile-avatar" ]
 		);
 		$html .= Html::element(
 			"img",
-			["class" => "profile-avatar-image", "src" => 'https://placehold.co/400x400']
+			[ "class" => "profile-avatar-image", "src" => 'https://placehold.co/400x400' ]
 		);
 		$html .= Html::closeElement(
 			"div",
 		);
 		$html .= Html::openElement(
 			"div",
-			["class" => "profile-information"]
+			[ "class" => "profile-information" ]
 		);
 
 		// begin the header (where the username, groups etc are)
 		$html .= Html::openElement(
 			"div",
-			["class" => "profile-header"]
+			[ "class" => "profile-header" ]
 		);
 		// user groups etc
 		$html .= Html::openElement(
 			"div",
-			["class" => "profile-header-attributes"]
+			[ "class" => "profile-header-attributes" ]
 		);
 		$html .= Html::element(
 			"h1",
@@ -115,7 +115,7 @@ class UserPage extends Article {
 			$this->mUserProfile->getName()
 		);
 
-		if ($this->mUserProfile->getRealName()) {
+		if ( $this->mUserProfile->getRealName() ) {
 			$html .= Html::element(
 				"h2",
 				[],
@@ -123,14 +123,14 @@ class UserPage extends Article {
 			);
 		}
 
-		$groups = UserInformation::getUserGroups($this->mUserProfile);
+		$groups = UserInformation::getUserGroups( $this->mUserProfile, true );
 
-		if (count($groups) > 0) {
-			foreach ($groups as $group) {
+		if ( count( $groups ) > 0 ) {
+			foreach ( $groups as $group ) {
 				$html .= Html::element(
 					"span",
-					['class' => 'profile-user-group'],
-					$this->context->msg("group-{$group}-member")
+					[ 'class' => 'profile-user-group' ],
+					$this->context->msg( "group-{$group}-member" )
 				);
 			}
 		}
@@ -142,12 +142,12 @@ class UserPage extends Article {
 		// edit button
 		$html .= Html::openElement(
 			"div",
-			["class" => "profile-header-actions"]
+			[ "class" => "profile-header-actions" ]
 		);
-		if ($this->canEditProfile()) {
+		if ( $this->canEditProfile() ) {
 			$html .= Html::element(
 				"button",
-				["class" => "mw-ui-button mw-ui-progressive", "id" => 'userProfileV2-edit'],
+				[ "class" => "mw-ui-button mw-ui-progressive", "id" => 'userProfileV2-edit' ],
 				"Edit"
 			);
 		}
@@ -161,7 +161,7 @@ class UserPage extends Article {
 		// edit count etc
 		$html .= Html::openElement(
 			"ul",
-			['class' => 'profile-header-statistics']
+			[ 'class' => 'profile-header-statistics' ]
 		);
 		$html .= Html::rawElement(
 			"li",
@@ -174,8 +174,8 @@ class UserPage extends Article {
 		);
 		$html .= Html::element(
 			"div",
-			['class' => 'profile-header-about'],
-			UserInformation::getUserBiography($this->mUserProfile)
+			[ 'class' => 'profile-header-about' ],
+			UserInformation::getUserBiography( $this->mUserProfile )
 		);
 		$html .= Html::closeElement(
 			"div",
@@ -211,15 +211,14 @@ class UserPage extends Article {
 	 * @return bool
 	 */
 	private function canEditProfile(): bool {
-
-		if ($this->mIsOwner) {
+		if ( $this->mIsOwner ) {
 			return true;
 		}
 
 		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
-		$userHasPermission = $permissionManager->userHasRight($this->mViewer, 'profilemanager');
+		$userHasPermission = $permissionManager->userHasRight( $this->mViewer, 'profilemanager' );
 
-		if ($userHasPermission) {
+		if ( $userHasPermission ) {
 			return true;
 		}
 
