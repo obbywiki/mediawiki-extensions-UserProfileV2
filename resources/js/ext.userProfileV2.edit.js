@@ -161,6 +161,37 @@ $(document).ready(function () {
 			return fieldset;
 		};
 
+		ProcessDialog.prototype.getActionProcess = function (action) {
+			if (action === 'continue') {
+				return new OO.ui.Process(function () {
+					// Collect form data
+					var formData = {
+						'profile-aboutme': this.aboutMe.getValue(),
+						'profile-discord': this.discordLink.getValue(),
+						'profile-twitter': this.twitterLink.getValue(),
+						'profile-show-globalgroups': this.showGlobalGroups.isSelected() ? '1' : '',
+						'profile-show-globaledits': this.showGlobalEditCount.isSelected() ? '1' : ''
+					};
+
+					// Submit data to API
+					return submitUserData(formData).then(function () {
+						// Close the dialog if submission was successful
+						this.close({action: action});
+					}.bind(this)).catch(function (error) {
+						// Handle error (e.g., show error message to user)
+						console.error('Failed to save profile:', error);
+						return new OO.ui.Error('Failed to save profile. Please try again.');
+					});
+				}, this);
+			} else if (action) {
+				return new OO.ui.Process(function () {
+					this.close({action: action});
+				}, this);
+			}
+			// Fallback to parent handler.
+			return ProcessDialog.super.prototype.getActionProcess.call(this, action);
+		};
+
 
 		var windowManager = new OO.ui.WindowManager();
 		$(document.body).append(windowManager.$element);
@@ -191,6 +222,26 @@ $(document).ready(function () {
 		}).catch(function (error) {
 			console.error('API request failed:', error);
 			throw error;
+		});
+	}
+
+	function submitUserData(formData) {
+		const api = new mw.Api();
+
+		const profileData = Object.entries(formData)
+			.map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+			.join('|');
+
+		return api.postWithToken('csrf', {
+			action: 'setuserprofilev2',
+			format: 'json',
+			user_name: mw.config.get('wgRelevantUserName'),
+			profile_data: profileData
+		}).then(function (response) {
+			if (response.error) {
+				throw new Error(response.error.info || 'Unknown error occurred');
+			}
+			return response;
 		});
 	}
 });

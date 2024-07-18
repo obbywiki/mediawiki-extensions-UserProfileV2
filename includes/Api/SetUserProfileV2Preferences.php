@@ -92,9 +92,10 @@ class SetUserProfileV2Preferences extends ApiBase {
 				ParamValidator::PARAM_REQUIRED => true,
 			],
 			'profile_data' => [
-				ParamValidator::PARAM_TYPE => 'array',
+				ParamValidator::PARAM_ISMULTI => true,
 				ParamValidator::PARAM_REQUIRED => true,
 			]
 		];
 	}
+
 }

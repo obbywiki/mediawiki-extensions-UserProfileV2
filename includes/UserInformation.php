@@ -59,7 +59,13 @@ class UserInformation {
 		return $bio;
 	}
 
-	public static function setPreferences(User $user, UserOptionsManager $userOptionsManager, array $data) {
+	public static function setPreferences(User $user, UserOptionsManager $userOptionsManager, array $profileData) {
+
+		$data = [];
+		foreach ($profileData as $pair) {
+			list($key, $value) = explode('=', $pair, 2);
+			$data[$key] = urldecode($value); // since we got from the URl, it will be encoded, convert it back to human
+		}
 
 		// first remove all the invalid elements from the data array (incase someone posts something incongrous here)
 		$data = array_filter($data, function ($key) {
@@ -70,6 +76,7 @@ class UserInformation {
 			$userOptionsManager->setOption($user, $key, $value);
 		}
 
+		$userOptionsManager->saveOptions($user);
 
 	}
 
