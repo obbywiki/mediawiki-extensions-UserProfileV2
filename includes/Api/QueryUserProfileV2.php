@@ -22,7 +22,9 @@ class QueryUserProfileV2 extends ApiQueryBase {
 	private static $preferences = [
 		'profile-aboutme',
 		'profile-show-globalgroups',
-		'profile-show-globaledits'
+		'profile-show-globaledits',
+		'profile-discord',
+		'profile-twitter'
 	];
 
 	/**

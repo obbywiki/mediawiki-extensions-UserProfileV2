@@ -19,7 +19,7 @@ $(document).ready(function () {
 			{
 				action: 'continue',
 				modes: 'edit',
-				label: 'Continue',
+				label: 'Save',
 				flags: ['primary', 'progressive']
 			},
 			{
@@ -41,16 +41,29 @@ $(document).ready(function () {
 		];
 
 		ProcessDialog.prototype.initialize = function () {
+
 			ProcessDialog.super.prototype.initialize.apply(this, arguments);
 
 			this.panel1 = new OO.ui.PanelLayout({padded: true, expanded: false});
-			this.panel1.$element.append('<p>This dialog uses an action set configured with modes. This is edit mode. Click \'help\' to see help mode. </p>');
+			this.addFieldsToPanel(this.panel1);
 			this.panel2 = new OO.ui.PanelLayout({padded: true, expanded: false});
-			this.panel2.$element.append('<p>This is help mode. Only the \'back\' button is configured to be visible here. Click \'back\' to return to \'edit\' mode</p>');
+			this.panel2.$element.append('<p>Use this dialog to change the contents of your user profile.</p>');
 			this.stackLayout = new OO.ui.StackLayout({
 				items: [this.panel1, this.panel2]
 			});
 			this.$body.append(this.stackLayout.$element);
+
+			// get our data and set it into the form
+			const dialog = this;
+			getUserData().then(function (userData) {
+				dialog.aboutMe.setValue(userData.query[0]['profile-aboutme'] || '');
+				dialog.discordLink.setValue(userData.query[0]['profile-discord'] || '');
+				dialog.twitterLink.setValue(userData.query[0]['profile-twitter'] || '');
+				dialog.showGlobalGroups.setSelected(userData.query[0]['profile-show-globalgroups'] === "1");
+				dialog.showGlobalEditCount.setSelected(userData.query[0]['profile-show-globaledits'] === "1");
+			}).catch(function (error) {
+				console.error('Could not set the data for this user');
+			});
 		};
 
 		// Set up the initial mode of the window ('edit', in this example.)
@@ -89,6 +102,65 @@ $(document).ready(function () {
 			return this.panel1.$element.outerHeight(true);
 		};
 
+		ProcessDialog.prototype.addFieldsToPanel = function (panel) {
+			var fieldset = this.getEditFields();
+			panel.$element.append(fieldset.$element);
+		};
+
+		ProcessDialog.prototype.getEditFields = function () {
+			this.aboutMe = new OO.ui.MultilineTextInputWidget({
+				placeholder: 'About Me'
+			});
+			this.discordLink = new OO.ui.TextInputWidget({
+				placeholder: 'joebloggs'
+			});
+			this.twitterLink = new OO.ui.TextInputWidget({
+				placeholder: '@johnappleseed'
+			});
+			this.showGlobalGroups = new OO.ui.CheckboxInputWidget({
+				selected: false
+			});
+			this.showGlobalEditCount = new OO.ui.CheckboxInputWidget({
+				selected: false
+			});
+
+			var fieldset = new OO.ui.FieldsetLayout({
+				label: 'Edit Your Profile',
+				classes: ['container']
+			});
+
+			fieldset.addItems([
+				new OO.ui.FieldLayout(this.aboutMe, {
+					label: 'About Me',
+					align: 'top',
+					help: 'Please keep it short (200 characters).',
+					helpInline: true
+				}),
+				new OO.ui.FieldLayout(this.discordLink, {
+					label: 'Discord Username',
+					align: 'top',
+					help: 'Your Discord Username (must not contain #)'
+				}),
+				new OO.ui.FieldLayout(this.twitterLink, {
+					label: 'Twitter Username',
+					align: 'top',
+					help: 'Your Twitter Username, with the @'
+				}),
+				new OO.ui.FieldLayout(this.showGlobalGroups, {
+					label: 'Show my global usergroups?',
+					align: 'inline',
+					help: "Show global user groups that I am part of (will be visible to everyone)"
+				}),
+				new OO.ui.FieldLayout(this.showGlobalEditCount, {
+					label: 'Show my global editcount?',
+					align: 'inline',
+					help: "Show my global edit count from CentralAuth (will be visible to everyone)"
+				})
+			]);
+
+			return fieldset;
+		};
+
 
 		var windowManager = new OO.ui.WindowManager();
 		$(document.body).append(windowManager.$element);
@@ -105,4 +177,20 @@ $(document).ready(function () {
 		});
 
 	})();
+
+	function getUserData() {
+		const api = new mw.Api();
+		return api.get({
+			action: 'query',
+			format: 'json',
+			list: 'queryuserprofilev2',
+			user_name: mw.config.get('wgRelevantUserName')
+		}).then(function (userData) {
+			console.log(userData);
+			return userData;
+		}).catch(function (error) {
+			console.error('API request failed:', error);
+			throw error;
+		});
+	}
 });
