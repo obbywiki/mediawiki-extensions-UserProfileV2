@@ -25,7 +25,7 @@ class UserPage extends Article {
 
 	public function __construct(Title $title) {
 		$userFactory = MediaWikiServices::getInstance()->getUserFactory();
-		$this->mUserProfile = $userFactory->newFromName($title);
+		$this->mUserProfile = $userFactory->newFromName($title->getBaseText());
 
 		$this->context = $this->getContext();
 		$this->mViewer = $this->context->getUser();

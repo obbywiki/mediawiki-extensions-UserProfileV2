@@ -13,7 +13,7 @@ class Hooks implements ArticleFromTitleHook,
 	 * @inheritDoc
 	 */
 	public function onArticleFromTitle($title, &$article, $context) {
-		if ($title->inNamespace(NS_USER)) {
+		if ($title->inNamespaces([NS_USER, NS_USER_TALK]) && !$title->isSubpage()) {
 			$article = new UserPage($title);
 		}
 	}
