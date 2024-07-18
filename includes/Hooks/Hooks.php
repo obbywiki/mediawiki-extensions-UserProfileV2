@@ -42,9 +42,15 @@ class Hooks implements
 			'help-message' => 'aboutmehelp',
 		];
 
-		$preferences['profile-show-globaledit'] = [
+		$preferences['profile-show-globaledits'] = [
 			'class' => 'HTMLCheckField',
 			'label' => "Show my global edit count on my userpage",
+			'section' => 'profile'
+		];
+
+		$preferences['profile-show-globalgroups'] = [
+			'class' => 'HTMLCheckField',
+			'label' => "Show my global user groups on my userpage",
 			'section' => 'profile'
 		];
 	}
