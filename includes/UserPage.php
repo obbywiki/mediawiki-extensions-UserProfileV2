@@ -53,6 +53,14 @@ class UserPage extends Article {
 		$con = $this->getContext();
 		$output = $con->getOutput();
 		$output->enableOOUI();
+
+		// if this user doesn't exist, bail early without loading our css or js
+		// and just show the regular 'user doesn't exist' message from core.
+		if (!$this->mUserProfile->getUser()->isRegistered()) {
+			parent::view();
+			return;
+		}
+
 		// set the page title
 		$output->setPageTitle($this->getTitle()->getPrefixedText());
 		$output->addModuleStyles(['ext.userProfileV2.styles']);

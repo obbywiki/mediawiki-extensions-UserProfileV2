@@ -2,6 +2,7 @@
 
 namespace Telepedia\UserProfileV2\Hooks;
 
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\Hook\ArticleFromTitleHook;
 use MediaWiki\Preferences\Hook\GetPreferencesHook;
 use Telepedia\UserProfileV2\UserPage;
@@ -13,7 +14,11 @@ class Hooks implements ArticleFromTitleHook,
 	 * @inheritDoc
 	 */
 	public function onArticleFromTitle($title, &$article, $context) {
-		if ($title->inNamespaces([NS_USER, NS_USER_TALK]) && !$title->isSubpage()) {
+
+		$userNameUtils = MediaWikiServices::getInstance()->getUserNameUtils();
+		$pageTitle = $title->getText();
+
+		if ($title->inNamespaces([NS_USER, NS_USER_TALK]) && !$title->isSubpage() && $userNameUtils->isUsable($pageTitle)) {
 			$article = new UserPage($title);
 		}
 	}
