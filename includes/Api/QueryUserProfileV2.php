@@ -2,6 +2,7 @@
 
 namespace Telepedia\UserProfileV2\Api;
 
+use ApiQuery;
 use ApiQueryBase;
 use MediaWiki\User\User;
 use MediaWiki\User\UserFactory;
@@ -17,34 +18,46 @@ class QueryUserProfileV2 extends ApiQueryBase {
 	/** @var UserFactory */
 	private UserFactory $userFactory;
 
+	/** @var string[] */
 	private static $preferences = [
 		'profile-aboutme',
 		'profile-show-globalgroups',
 		'profile-show-globaledits'
 	];
 
-	public function __construct($query, $moduleName, UserOptionsLookup $userOptionsLookup, UserFactory $userFactory) {
-		parent::__construct($query, $moduleName);
+	/**
+	 * Main Constructor
+	 * @param ApiQuery $query
+	 * @param string $moduleName
+	 * @param UserOptionsLookup $userOptionsLookup
+	 * @param UserFactory $userFactory
+	 */
+	public function __construct( ApiQuery $query, string $moduleName,
+								UserOptionsLookup $userOptionsLookup, UserFactory $userFactory ) {
+		parent::__construct( $query, $moduleName );
 		$this->userOptionsLookup = $userOptionsLookup;
 		$this->userFactory = $userFactory;
 	}
 
 	#[\Override]
+
+	/**
+	 * Main entrypoint; handles all the logic
+	 */
 	public function execute() {
 		$params = $this->extractRequestParams();
 
 		$userName = $params['user_name'] ?? null;
 		$userId = $params['user_id'] ?? null;
 
-		if (!is_null($userName)) {
-			$userProfile = $this->getUserProfileFromName($userName);
-		} elseif (!is_null($userId)) {
-			$userProfile = $this->getUserProfileFromId($userId);
+		if ( $userName !== null ) {
+			$userProfile = $this->getUserProfileFromName( $userName );
+		} elseif ( $userId !== null ) {
+			$userProfile = $this->getUserProfileFromId( $userId );
 		}
 
-		$this->getResult()->addValue('query', false, $userProfile);
+		$this->getResult()->addValue( 'query', false, $userProfile );
 	}
-
 
 	/**
 	 * Get the users profile from their name
@@ -52,18 +65,17 @@ class QueryUserProfileV2 extends ApiQueryBase {
 	 * @return array
 	 * @throws \ApiUsageException
 	 */
-	private function getUserProfileFromName(string $userName): array {
+	private function getUserProfileFromName( string $userName ): array {
+		$user = $this->getUserFromName( $userName );
 
-		$user = $this->getUserFromName($userName);
-
-		if (!$user->isRegistered()) {
-			$this->dieWithError(['apierror-invalidusername', wfEscapeWikiText($userName)]);
+		if ( !$user->isRegistered() ) {
+			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $userName ) ] );
 		}
 
 		$userPreferences = [];
 
-		foreach (self::$preferences as $preference) {
-			$pref = $this->userOptionsLookup->getOption($user, $preference);
+		foreach ( self::$preferences as $preference ) {
+			$pref = $this->userOptionsLookup->getOption( $user, $preference );
 			$userPreferences[$preference] = $pref;
 		}
 
@@ -75,7 +87,7 @@ class QueryUserProfileV2 extends ApiQueryBase {
 	 * @param int $userId
 	 * @return null
 	 */
-	private function getUserProfileFromId(int $userId) {
+	private function getUserProfileFromId( int $userId ) {
 		return null;
 	}
 
@@ -84,8 +96,8 @@ class QueryUserProfileV2 extends ApiQueryBase {
 	 * @param string $userName the user's name
 	 * @return User
 	 */
-	private function getUserFromName(string $userName): User {
-		return $this->userFactory->newFromName($userName);
+	private function getUserFromName( string $userName ): User {
+		return $this->userFactory->newFromName( $userName );
 	}
 
 	/**
@@ -93,11 +105,12 @@ class QueryUserProfileV2 extends ApiQueryBase {
 	 * @param int $userId the users id
 	 * @return User
 	 */
-	private function getUserFromId(int $userId): User {
-		return $this->userFactory->newFromId($userId);
+	private function getUserFromId( int $userId ): User {
+		return $this->userFactory->newFromId( $userId );
 	}
 
 	#[\Override]
+
 	/**
 	 * Get the allowed parameters that can be passed to this API
 	 * @return array[]

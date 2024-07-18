@@ -9,18 +9,19 @@ use Telepedia\UserProfileV2\UserPage;
 
 class Hooks implements
 	ArticleFromTitleHook,
-	GetPreferencesHook {
+	GetPreferencesHook
+{
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onArticleFromTitle($title, &$article, $context) {
+	public function onArticleFromTitle( $title, &$article, $context ) {
 		$userNameUtils = MediaWikiServices::getInstance()->getUserNameUtils();
 		$pageTitle = $title->getText();
 
-		if ($title->inNamespaces([NS_USER, NS_USER_TALK]) && !$title->isSubpage() &&
-			$userNameUtils->isUsable($pageTitle)) {
-			$article = new UserPage($title);
+		if ( $title->inNamespaces( [ NS_USER, NS_USER_TALK ] ) && !$title->isSubpage() &&
+			$userNameUtils->isUsable( $pageTitle ) ) {
+			$article = new UserPage( $title );
 		}
 	}
 
@@ -30,7 +31,7 @@ class Hooks implements
 	 * @param &$preferences
 	 * @return void
 	 */
-	public function onGetPreferences($user, &$preferences): void {
+	public function onGetPreferences( $user, &$preferences ): void {
 		// add the about me preference
 		$preferences['profile-aboutme'] = [
 			'class' => 'HTMLTextAreaField',
@@ -38,7 +39,7 @@ class Hooks implements
 			'section' => 'profile',
 			'rows' => 6,
 			'maxlength' => 200,
-			'placeholder' => wfMessage('aboutmeplaceholder')->plain(),
+			'placeholder' => wfMessage( 'aboutmeplaceholder' )->plain(),
 			'help-message' => 'aboutmehelp',
 		];
 
