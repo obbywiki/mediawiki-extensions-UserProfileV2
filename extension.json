@@ -60,6 +60,23 @@
 			"class": "Telepedia\\UserProfileV2\\Hooks\\Hooks"
 		}
 	},
+	"ResourceModules": {
+		"ext.userProfileV2.edit": {
+			"scripts": [
+				"js/ext.userProfileV2.edit.js"
+			],
+			"dependencies": [
+				"oojs-ui-widgets",
+				"oojs-ui-windows",
+				"oojs-ui-core"
+			]
+		},
+		"ext.userProfileV2.styles": {
+			"styles": [
+				"css/ext.userProfileV2.less"
+			]
+		}
+	},
 	"ConfigRegistry": {
 		"UserProfileV2": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},

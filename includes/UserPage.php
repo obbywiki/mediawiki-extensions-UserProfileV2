@@ -52,9 +52,11 @@ class UserPage extends Article {
 	public function view() {
 		$con = $this->getContext();
 		$output = $con->getOutput();
-
+		$output->enableOOUI();
 		// set the page title
 		$output->setPageTitle($this->getTitle()->getPrefixedText());
+		$output->addModuleStyles(['ext.userProfileV2.styles']);
+		$output->addModules(['ext.userProfileV2.edit']);
 
 		$output->addHTML(self::getProfileLayout());
 	}
@@ -134,6 +136,16 @@ class UserPage extends Article {
 			"div",
 			["class" => "profile-header-actions"]
 		);
+		if ($this->canEditProfile()) {
+			$html .= Html::element(
+				"button",
+				["class" => "mw-ui-button mw-ui-progressive", "id" => 'userProfileV2-edit'],
+				"Edit"
+			);
+		}
+		$html .= Html::closeElement(
+			"div",
+		);
 		$html .= Html::closeElement(
 			"div",
 		);
@@ -143,14 +155,22 @@ class UserPage extends Article {
 			"ul",
 			['class' => 'profile-header-statistics']
 		);
-		$html .= Html::element(
+		$html .= Html::rawElement(
 			"li",
 			[],
-			"{$this->mUserProfile->getEditCount()} edits"
+			"<strong>{$this->mUserProfile->getEditCount()}</strong> edits"
 		);
 		$html .= Html::closeElement(
 			"ul",
 			[],
+		);
+		$html .= Html::element(
+			"div",
+			['class' => 'profile-header-about'],
+			UserInformation::getUserBiography($this->mUserProfile)
+		);
+		$html .= Html::closeElement(
+			"div",
 		);
 		$html .= Html::closeElement(
 			"div",
@@ -176,5 +196,25 @@ class UserPage extends Article {
 		);
 
 		return $html;
+	}
+
+	/**
+	 * Can the current user edit this profile?
+	 * @return bool
+	 */
+	private function canEditProfile(): bool {
+
+		if ($this->mIsOwner) {
+			return true;
+		}
+
+		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+		$userHasPermission = $permissionManager->userHasRight($this->mViewer, 'profilemanager');
+
+		if ($userHasPermission) {
+			return true;
+		}
+
+		return false;
 	}
 }

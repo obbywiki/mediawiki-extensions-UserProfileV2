@@ -20,4 +20,9 @@ class UserInformation {
 
 		return $localGroups;
 	}
+
+	public static function getUserBiography(User $user) {
+		$bio = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption($user, 'profile-aboutme');
+		return $bio;
+	}
 }
