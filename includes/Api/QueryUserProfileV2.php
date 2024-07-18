@@ -1,0 +1,119 @@
+<?php
+
+namespace Telepedia\UserProfileV2\Api;
+
+use ApiQueryBase;
+use MediaWiki\User\User;
+use MediaWiki\User\UserFactory;
+use MediaWiki\User\UserOptionsLookup;
+use Wikimedia\ParamValidator\ParamValidator;
+use Wikimedia\ParamValidator\TypeDef\IntegerDef;
+
+class QueryUserProfileV2 extends ApiQueryBase {
+
+	/** @var UserOptionsLookup */
+	private UserOptionsLookup $userOptionsLookup;
+
+	/** @var UserFactory */
+	private UserFactory $userFactory;
+
+	private static $preferences = [
+		'profile-aboutme',
+		'profile-show-globalgroups',
+		'profile-show-globaledits'
+	];
+
+	public function __construct($query, $moduleName, UserOptionsLookup $userOptionsLookup, UserFactory $userFactory) {
+		parent::__construct($query, $moduleName);
+		$this->userOptionsLookup = $userOptionsLookup;
+		$this->userFactory = $userFactory;
+	}
+
+	#[\Override]
+	public function execute() {
+		$params = $this->extractRequestParams();
+
+		$userName = $params['user_name'] ?? null;
+		$userId = $params['user_id'] ?? null;
+
+		if (!is_null($userName)) {
+			$userProfile = $this->getUserProfileFromName($userName);
+		} elseif (!is_null($userId)) {
+			$userProfile = $this->getUserProfileFromId($userId);
+		}
+
+		$this->getResult()->addValue('query', false, $userProfile);
+	}
+
+
+	/**
+	 * Get the users profile from their name
+	 * @param string $userName
+	 * @return array
+	 * @throws \ApiUsageException
+	 */
+	private function getUserProfileFromName(string $userName): array {
+
+		$user = $this->getUserFromName($userName);
+
+		if (!$user->isRegistered()) {
+			$this->dieWithError(['apierror-invalidusername', wfEscapeWikiText($userName)]);
+		}
+
+		$userPreferences = [];
+
+		foreach (self::$preferences as $preference) {
+			$pref = $this->userOptionsLookup->getOption($user, $preference);
+			$userPreferences[$preference] = $pref;
+		}
+
+		return $userPreferences;
+	}
+
+	/**
+	 * Get a users profile from their id
+	 * @param int $userId
+	 * @return null
+	 */
+	private function getUserProfileFromId(int $userId) {
+		return null;
+	}
+
+	/**
+	 * Get a user object from their name
+	 * @param string $userName the user's name
+	 * @return User
+	 */
+	private function getUserFromName(string $userName): User {
+		return $this->userFactory->newFromName($userName);
+	}
+
+	/**
+	 * Get a user object from an ID
+	 * @param int $userId the users id
+	 * @return User
+	 */
+	private function getUserFromId(int $userId): User {
+		return $this->userFactory->newFromId($userId);
+	}
+
+	#[\Override]
+	/**
+	 * Get the allowed parameters that can be passed to this API
+	 * @return array[]
+	 */
+	public function getAllowedParams() {
+		return [
+			'user_name' => [
+				ParamValidator::PARAM_TYPE => 'string',
+				IntegerDef::PARAM_MIN => 1,
+				ParamValidator::PARAM_REQUIRED => false,
+			],
+			'user_id' => [
+				ParamValidator::PARAM_TYPE => 'integer',
+				IntegerDef::PARAM_MIN => 1,
+				ParamValidator::PARAM_REQUIRED => false,
+			]
+		];
+	}
+}

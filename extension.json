@@ -77,6 +77,15 @@
 			]
 		}
 	},
+	"APIListModules": {
+		"queryuserprofilev2": {
+			"class": "Telepedia\\UserProfileV2\\API\\QueryUserProfileV2",
+			"services": [
+				"UserOptionsLookup",
+				"UserFactory"
+			]
+		}
+	},
 	"ConfigRegistry": {
 		"UserProfileV2": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
