@@ -99,12 +99,7 @@ class QueryUserProfileV2 extends ApiQueryBase {
 			'user_name' => [
 				ParamValidator::PARAM_TYPE => 'string',
 				IntegerDef::PARAM_MIN => 1,
-				ParamValidator::PARAM_REQUIRED => false,
-			],
-			'user_id' => [
-				ParamValidator::PARAM_TYPE => 'integer',
-				IntegerDef::PARAM_MIN => 1,
-				ParamValidator::PARAM_REQUIRED => false,
+				ParamValidator::PARAM_REQUIRED => true,
 			]
 		];
 	}
