@@ -1,3 +1,4 @@
 {
-	"apierror-invalidusername": "No user registered with the username '$1' on this wiki."
+	"apierror-invalidusername": "No user registered with the username '$1' on this wiki.",
+	"userprofilev2-user-locked": "This user account has been globally disabled."
 }
