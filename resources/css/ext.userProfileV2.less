@@ -95,3 +95,18 @@
 	display: inline-block;
 	margin: 0;
 }
+
+.profile-externalLinks a {
+	margin-right: 8px;
+}
+
+.external-link.tooltip:hover::after {
+	content: attr(username);
+	position: absolute;
+	background: @userprofile-secondary;
+	padding: 5px;
+	border-radius: 3px;
+	white-space: nowrap;
+	z-index: 1000;
+	transform: translate(-50%, 100%);
+}

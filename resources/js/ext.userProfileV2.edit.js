@@ -59,6 +59,7 @@ $(document).ready(function () {
 				dialog.aboutMe.setValue(userData.query[0]['profile-aboutme'] || '');
 				dialog.discordLink.setValue(userData.query[0]['profile-discord'] || '');
 				dialog.twitterLink.setValue(userData.query[0]['profile-twitter'] || '');
+				dialog.mastodonLink.setValue(userData.query[0]['profile-mastodon'] || '');
 				dialog.showGlobalGroups.setSelected(userData.query[0]['profile-show-globalgroups'] === "1");
 				dialog.showGlobalEditCount.setSelected(userData.query[0]['profile-show-globaledits'] === "1");
 			}).catch(function (error) {
@@ -117,6 +118,9 @@ $(document).ready(function () {
 			this.twitterLink = new OO.ui.TextInputWidget({
 				placeholder: '@johnappleseed'
 			});
+			this.mastodonLink = new OO.ui.TextInputWidget({
+				placeholder: '@clarkekent'
+			});
 			this.showGlobalGroups = new OO.ui.CheckboxInputWidget({
 				selected: false
 			});
@@ -146,6 +150,11 @@ $(document).ready(function () {
 					align: 'top',
 					help: 'Your Twitter Username, with the @'
 				}),
+				new OO.ui.FieldLayout(this.mastodonLink, {
+					label: 'Mastodon Username',
+					align: 'top',
+					help: 'Your Mastodon Username, with the @'
+				}),
 				new OO.ui.FieldLayout(this.showGlobalGroups, {
 					label: 'Show my global usergroups?',
 					align: 'inline',
@@ -169,6 +178,7 @@ $(document).ready(function () {
 						'profile-aboutme': this.aboutMe.getValue(),
 						'profile-discord': this.discordLink.getValue(),
 						'profile-twitter': this.twitterLink.getValue(),
+						'profile-mastodon': this.mastodonLink.getValue(),
 						'profile-show-globalgroups': this.showGlobalGroups.isSelected() ? '1' : '',
 						'profile-show-globaledits': this.showGlobalEditCount.isSelected() ? '1' : ''
 					};

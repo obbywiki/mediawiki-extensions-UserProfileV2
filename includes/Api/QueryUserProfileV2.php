@@ -24,7 +24,8 @@ class QueryUserProfileV2 extends ApiQueryBase {
 		'profile-show-globalgroups',
 		'profile-show-globaledits',
 		'profile-discord',
-		'profile-twitter'
+		'profile-twitter',
+		'profile-mastodon'
 	];
 
 	/**

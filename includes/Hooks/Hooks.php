@@ -58,6 +58,14 @@ class Hooks implements
 			'help-message' => 'twitterhelp',
 		];
 
+		$preferences['profile-mastodon'] = [
+			'class' => 'HTMLTextField',
+			'label-message' => 'mastodon',
+			'section' => 'profile',
+			'placeholder' => wfMessage('mastodonplaceholder')->plain(),
+			'help-message' => 'mastodonhelp',
+		];
+
 		$preferences['profile-show-globaledits'] = [
 			'class' => 'HTMLCheckField',
 			'label' => "Show my global edit count on my userpage",
