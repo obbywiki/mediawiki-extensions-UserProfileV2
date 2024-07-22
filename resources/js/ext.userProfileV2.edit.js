@@ -202,6 +202,7 @@ $(document).ready(function () {
 
 		UserAvatarDialog.static.actions = [
 			{action: 'save', label: 'Save', flags: ['primary', 'progressive']},
+			{action: 'delete', label: 'Delete Avatar', flags: ['primary', 'destructive']},
 			{label: 'Cancel', flags: ['safe', 'close']}
 		];
 
@@ -278,8 +279,8 @@ $(document).ready(function () {
 		};
 
 		UserAvatarDialog.prototype.getActionProcess = function (action) {
+			var dialog = this;
 			if (action === 'save') {
-				var dialog = this;
 				return new OO.ui.Process(function () {
 					if (dialog.selectedFile) {
 						return changeAvatar(dialog.selectedFile).then(function (response) {
@@ -287,34 +288,42 @@ $(document).ready(function () {
 							mw.notify(mw.message('userprofilev2-avatarchanged'));
 						}).catch(function (error) {
 							console.log(error);
-							const topHorizontal = new OO.ui.HorizontalLayout({
-								classes: ['userprofilev2-avatar-error']
-							});
-
-							const topPanel = new OO.ui.PanelLayout({
-								padded: true,
-								expanded: false,
-								classes: ['userprofilev2-avatar-error-message']
-							});
-							let errorMessage = mw.message(error);
-							console.log(errorMessage);
-							const messageBox = new OO.ui.MessageWidget({
-								type: 'error',
-								label: errorMessage.key.message // get the message from i18n
-							});
-
-							topPanel.$element.append(messageBox.$element);
-
-							topHorizontal.addItems([topPanel]);
-
-							dialog.$body.prepend(topPanel.$element);
+							dialog.showErrorMessage(error);
 						});
 					} else {
 						dialog.close({action: action});
 					}
 				});
+			} else if (action === 'delete') {
+				return new OO.ui.Process(function () {
+					return removeAvatar().then(function (response) {
+						dialog.close({action: action});
+						mw.notify(mw.message('userprofilev2-avatardeleted'));
+					}).catch(function (error) {
+						console.log(error);
+						dialog.showErrorMessage(error);
+					});
+				});
 			}
 			return UserAvatarDialog.super.prototype.getActionProcess.call(this, action);
+		};
+
+		UserAvatarDialog.prototype.showErrorMessage = function (error) {
+			const topPanel = new OO.ui.PanelLayout({
+				padded: true,
+				expanded: false,
+				classes: ['userprofilev2-avatar-error-message']
+			});
+			let errorMessage = mw.message(error);
+			console.log(errorMessage);
+			const messageBox = new OO.ui.MessageWidget({
+				type: 'error',
+				label: errorMessage.key.message // get the message from i18n
+			});
+
+			topPanel.$element.append(messageBox.$element);
+
+			this.$body.prepend(topPanel.$element);
 		};
 
 		// Create a single WindowManager for both dialogs
@@ -383,6 +392,25 @@ $(document).ready(function () {
 			format: 'json',
 			user_name: mw.config.get('wgRelevantUserName'), // the username of the profile we're viewing
 			profile_data: profileData
+		}).then(function (response) {
+			if (response.error) {
+				throw new Error(response.error.info || 'Unknown error occurred');
+			}
+			return response;
+		});
+	}
+
+	/**
+	 * Removes an avatar for the user profile you're viewing
+	 * @returns {*}
+	 */
+	function removeAvatar() {
+		const api = new mw.Api();
+
+		return api.postWithToken('csrf', {
+			action: 'userprofilev2deleteavatar',
+			format: 'json',
+			username: mw.config.get('wgRelevantUserName'), // the username of the profile we're viewing
 		}).then(function (response) {
 			if (response.error) {
 				throw new Error(response.error.info || 'Unknown error occurred');

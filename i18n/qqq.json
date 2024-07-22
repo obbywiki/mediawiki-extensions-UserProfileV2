@@ -3,5 +3,6 @@
 	"userprofilev2-user-locked": "Warning message shown on profile of a user profile when their account is locked via CentralAuth",
 	"userprofilev2-selectavatar": "Button text for uploading an avatar",
 	"userprofilev2-avatarchanged": "Text that displays in a bubble notification when an avatar has been successfully changed.",
-	"apierror-forbidden": "Error message shown when a user doesn't have permission to change an avatar."
+	"apierror-forbidden": "Error message shown when a user doesn't have permission to change an avatar.",
+	"userprofilev2-avatardeleted": "Message shown in bubble notification when an avatar has been successfully deleted."
 }
