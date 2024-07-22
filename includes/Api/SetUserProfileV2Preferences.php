@@ -20,8 +20,8 @@ class SetUserProfileV2Preferences extends ApiBase {
 	/** @var UserFactory */
 	private UserFactory $userFactory;
 
-	public function __construct( ApiMain $apiMain, $moduleName, UserOptionsManager $userOptionsManager, UserFactory $userFactory ) {
-		parent::__construct( $apiMain, $moduleName );
+	public function __construct(ApiMain $apiMain, $moduleName, UserOptionsManager $userOptionsManager, UserFactory $userFactory) {
+		parent::__construct($apiMain, $moduleName);
 		$this->userOptionsManager = $userOptionsManager;
 		$this->userFactory = $userFactory;
 	}
@@ -37,24 +37,24 @@ class SetUserProfileV2Preferences extends ApiBase {
 
 		$actionUser = $this->getUser();
 
-		$user = $this->getTargetUser( $userName );
+		$user = $this->getTargetUser($userName);
 
-		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $userName ) ] );
+		if (!$user->isRegistered()) {
+			$this->dieWithError(['apierror-invalidusername', wfEscapeWikiText($userName)]);
 		}
 
 		// if the user is not trying to change their own preferences, and isn't a profile manager, die.
-		if ( $actionUser !== $user || $this->getPermissionManager()->userHasRight( $user, 'profile-manage' ) ) {
-			$this->dieWithError( [ 'api-error-permission', wfEscapeWikiText( $userName ) ] );
+		if ($actionUser->getId() !== $user->getId() && !$this->getPermissionManager()->userHasRight($user, 'profile-manage')) {
+			$this->dieWithError(['api-error-permission', wfEscapeWikiText($userName)]);
 		}
 
 		try {
-			UserInformation::setPreferences( $user, $this->userOptionsManager, $body );
-			$this->getResult()->addValue( null, 'result', 'success' );
+			UserInformation::setPreferences($user, $this->userOptionsManager, $body);
+			$this->getResult()->addValue(null, 'result', 'success');
 			return;
-		} catch ( Exception $e ) {
-			$this->getResult()->addValue( null, 'result', 'failure' );
-			$this->getResult()->addValue( null, 'errormsg', $e->getMessage() );
+		} catch (Exception $e) {
+			$this->getResult()->addValue(null, 'result', 'failure');
+			$this->getResult()->addValue(null, 'errormsg', $e->getMessage());
 			return;
 		}
 	}
@@ -63,8 +63,8 @@ class SetUserProfileV2Preferences extends ApiBase {
 	 * @param string $userName
 	 * @return User
 	 */
-	private function getTargetUser( string $userName ): User {
-		return $this->userFactory->newFromName( $userName );
+	private function getTargetUser(string $userName): User {
+		return $this->userFactory->newFromName($userName);
 	}
 
 	/**

@@ -162,3 +162,13 @@
 .hidden {
 	display: none;
 }
+
+ul.profile-header-statistics > li:not(:first-child):before {
+	content: "·";
+	padding-right: 12px;
+	font-size: 14px;
+}
+
+ul.profile-header-statistics > li:not(:first-child) {
+	margin-left: 12px;
+}
