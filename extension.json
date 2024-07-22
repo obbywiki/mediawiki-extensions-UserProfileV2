@@ -57,7 +57,10 @@
 	},
 	"HookHandlers": {
 		"main": {
-			"class": "Telepedia\\UserProfileV2\\Hooks\\Hooks"
+			"class": "Telepedia\\UserProfileV2\\Hooks\\Hooks",
+			"services": [
+				"UserProfileV2HookRunner"
+			]
 		}
 	},
 	"ResourceModules": {
@@ -69,6 +72,11 @@
 				"oojs-ui-widgets",
 				"oojs-ui-windows",
 				"oojs-ui-core"
+			],
+			"messages": [
+				"userprofilev2-selectavatar",
+				"userprofilev2-avatarchanged",
+				"apierror-forbidden"
 			]
 		},
 		"ext.userProfileV2.styles": {
@@ -94,6 +102,20 @@
 				"UserOptionsManager",
 				"UserFactory"
 			]
+		},
+		"userprofilev2uploadavatar": {
+			"class": "Telepedia\\UserProfileV2\\Api\\UploadUserProfileV2Avatar",
+			"services": [
+				"UserFactory",
+				"PermissionManager"
+			]
+		},
+		"userprofilev2deleteavatar": {
+			"class": "Telepedia\\UserProfileV2\\Api\\DeleteUserProfileV2Avatar",
+			"services": [
+				"UserFactory",
+				"PermissionManager"
+			]
 		}
 	},
 	"ConfigRegistry": {
@@ -111,7 +133,43 @@
 			"path": false,
 			"description": "Accent colour used for the background of user group tags",
 			"public": true
+		},
+		"UserProfileV2UseGlobalAvatars": {
+			"value": false,
+			"path": false,
+			"description": "Use the same avatar across all wikis on a Wiki Farm",
+			"public": true
+		},
+		"UserProfileV2GlobalWiki": {
+			"value": false,
+			"path": false,
+			"description": "The database name of the wiki to use when using global avatars",
+			"public": true
+		},
+		"UserProfileV2Backend": {
+			"value": "",
+			"path": false,
+			"description": "Backend to use for user profile images",
+			"public": true
+		},
+		"UserProfileGlobalUploadDirectory": {
+			"value": "",
+			"public": true,
+			"description": "The upload directory for the global wiki when using global avatars"
+		},
+		"UserProfileGlobalUploadPath": {
+			"value": "",
+			"public": true,
+			"description": "The upload path for the global wiki when using global avatars"
+		},
+		"UserProfileGlobalUploadBaseUrl": {
+			"value": "",
+			"public": true,
+			"description": "The upload base url for the global wiki when using global avatars"
 		}
 	},
+	"ServiceWiringFiles": [
+		"ServiceWiring.php"
+	],
 	"manifest_version": 2
 }
