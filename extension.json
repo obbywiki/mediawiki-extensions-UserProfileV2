@@ -1,12 +1,12 @@
 {
 	"name": "UserProfileV2",
 	"author": [
-		"Telepedia Ltd"
+		"Original Authority"
 	],
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"url": "https://gitlab.com/telepedia/extensions/userprofilev2",
 	"descriptionmsg": "userprofilev2-desc",
-	"license-name": "Proprietary",
+	"license-name": "GPL-2.0-or-later",
 	"type": "telepedia",
 	"requires": {
 		"MediaWiki": ">= 1.41.0",
@@ -76,7 +76,8 @@
 			"messages": [
 				"userprofilev2-selectavatar",
 				"userprofilev2-avatarchanged",
-				"apierror-forbidden"
+				"apierror-forbidden",
+				"userprofilev2-avatardeleted"
 			]
 		},
 		"ext.userProfileV2.styles": {
