@@ -8,6 +8,7 @@ use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\User\User;
 use MediaWiki\User\UserOptionsManager;
+use Telepedia\UserProfileV2\Avatar\UserProfileV2Avatar;
 
 class UserInformation {
 
@@ -35,26 +36,26 @@ class UserInformation {
 	 * @param bool $global should we pull groups from CentralAuth?
 	 * @return array
 	 */
-	public static function getUserGroups(User $user, bool $global = false): array {
+	public static function getUserGroups( User $user, bool $global = false ): array {
 		$userGroupManager = MediaWikiServices::getInstance()->getUserGroupManager();
-		$localGroups = $userGroupManager->getUserGroups($user); // the local groups the user belongs to
+		$localGroups = $userGroupManager->getUserGroups( $user ); // the local groups the user belongs to
 
-		$centralAuthLoaded = ExtensionRegistry::getInstance()->isLoaded('CentralAuth');
+		$centralAuthLoaded = ExtensionRegistry::getInstance()->isLoaded( 'CentralAuth' );
 
-		if ($global && $centralAuthLoaded) {
-			$centralAuthUser = CentralAuthUser::getInstance($user);
+		if ( $global && $centralAuthLoaded ) {
+			$centralAuthUser = CentralAuthUser::getInstance( $user );
 			$globalGroups = $centralAuthUser->getGlobalGroups();
 
-			if (count($globalGroups) > 0) {
+			if ( count( $globalGroups ) > 0 ) {
 				// get the array key for the steward group
-				$steward = array_search('steward', $localGroups);
+				$steward = array_search( 'steward', $localGroups );
 
 				// if it exists, unset it so we don't show duplicate user groups (since the global steward will always take precedence)
-				if ($steward) {
-					unset($localGroups[$steward]);
+				if ( $steward ) {
+					unset( $localGroups[$steward] );
 				}
 
-				return array_merge($localGroups, $globalGroups);
+				return array_merge( $localGroups, $globalGroups );
 			}
 		}
 
@@ -65,30 +66,28 @@ class UserInformation {
 	 * @param User $user
 	 * @return mixed|null
 	 */
-	public static function getUserBiography(User $user) {
-		$bio = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption($user, 'profile-aboutme');
+	public static function getUserBiography( User $user ) {
+		$bio = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption( $user, 'profile-aboutme' );
 		return $bio;
 	}
 
-	public static function setPreferences(User $user, UserOptionsManager $userOptionsManager, array $profileData) {
-
+	public static function setPreferences( User $user, UserOptionsManager $userOptionsManager, array $profileData ) {
 		$data = [];
-		foreach ($profileData as $pair) {
-			list($key, $value) = explode('=', $pair, 2);
-			$data[$key] = urldecode($value); // since we got from the URl, it will be encoded, convert it back to human
+		foreach ( $profileData as $pair ) {
+			list( $key, $value ) = explode( '=', $pair, 2 );
+			$data[$key] = urldecode( $value ); // since we got from the URl, it will be encoded, convert it back to human
 		}
 
 		// first remove all the invalid elements from the data array (incase someone posts something incongrous here)
-		$data = array_filter($data, function ($key) {
-			return in_array($key, self::$preferences);
-		}, ARRAY_FILTER_USE_KEY);
+		$data = array_filter( $data, static function ( $key ) {
+			return in_array( $key, self::$preferences );
+		}, ARRAY_FILTER_USE_KEY );
 
-		foreach ($data as $key => $value) {
-			$userOptionsManager->setOption($user, $key, $value);
+		foreach ( $data as $key => $value ) {
+			$userOptionsManager->setOption( $user, $key, $value );
 		}
 
-		$userOptionsManager->saveOptions($user);
-
+		$userOptionsManager->saveOptions( $user );
 	}
 
 	/**
@@ -98,7 +97,7 @@ class UserInformation {
 	 * @param User $user
 	 * @return bool
 	 */
-	public static function isBlocked(User $user): bool {
+	public static function isBlocked( User $user ): bool {
 		return (bool)$user->getBlock();
 	}
 
@@ -107,43 +106,42 @@ class UserInformation {
 	 * @param User $user
 	 * @return bool
 	 */
-	public static function isLocked(User $user): bool {
-		if (!ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
+	public static function isLocked( User $user ): bool {
+		if ( !ExtensionRegistry::getInstance()->isLoaded( 'CentralAuth' ) ) {
 			return false; // just return false if we don't have CA, we don't care
 		}
 
-		return CentralAuthUser::getInstance($user)->isLocked();
+		return CentralAuthUser::getInstance( $user )->isLocked();
 	}
 
-	public static function getProfileLinks(User $user): array {
+	public static function getProfileLinks( User $user ): array {
 		$userOptionsLookup = MediaWikiServices::getInstance()->getUserOptionsLookup();
 
 		$externalLinks = [];
 
-		foreach (self::$externalLinks as $externalLink) {
-			$externalLinkValue = $userOptionsLookup->getOption($user, $externalLink);
+		foreach ( self::$externalLinks as $externalLink ) {
+			$externalLinkValue = $userOptionsLookup->getOption( $user, $externalLink );
 
-			$externalLink = str_replace("profile-", '', $externalLink);
+			$externalLink = str_replace( "profile-", '', $externalLink );
 
-			if ($externalLinkValue) {
-				$externalLinks[$externalLink] = self::generateExternalLink($externalLink, $externalLinkValue);
+			if ( $externalLinkValue ) {
+				$externalLinks[$externalLink] = self::generateExternalLink( $externalLink, $externalLinkValue );
 			}
 		}
 
-		foreach (self::$externalLinksWithTooltip as $externalLink) {
-			$externalLinkValue = $userOptionsLookup->getOption($user, $externalLink);
-			$externalLink = str_replace("profile-", '', $externalLink);
+		foreach ( self::$externalLinksWithTooltip as $externalLink ) {
+			$externalLinkValue = $userOptionsLookup->getOption( $user, $externalLink );
+			$externalLink = str_replace( "profile-", '', $externalLink );
 
-			if ($externalLinkValue) {
-				$externalLinks[$externalLink] = self::generateExternalLinkWithTooltip($externalLink, $externalLinkValue);
+			if ( $externalLinkValue ) {
+				$externalLinks[$externalLink] = self::generateExternalLinkWithTooltip( $externalLink, $externalLinkValue );
 			}
 		}
 
 		return $externalLinks;
 	}
 
-	private static function generateExternalLink(string $externalLink, string $value) {
-
+	private static function generateExternalLink( string $externalLink, string $value ) {
 		/**
 		 * Icons from iconoir and licensed under the MIT license
 		 */
@@ -152,7 +150,7 @@ class UserInformation {
 			'twitter' => '<?xml version="1.0" encoding="UTF-8"?><svg width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000"><path d="M16.8198 20.7684L3.75317 3.96836C3.44664 3.57425 3.72749 3 4.22678 3H6.70655C6.8917 3 7.06649 3.08548 7.18016 3.23164L20.2468 20.0316C20.5534 20.4258 20.2725 21 19.7732 21H17.2935C17.1083 21 16.9335 20.9145 16.8198 20.7684Z" stroke="#000000" stroke-width="1.5"></path><path d="M20 3L4 21" stroke="#000000" stroke-width="1.5" stroke-linecap="round"></path></svg>'
 		];
 
-		switch ($externalLink) {
+		switch ( $externalLink ) {
 			case 'twitter':
 				$value = "https://x.com/$value";
 				break;
@@ -163,10 +161,10 @@ class UserInformation {
 				return $value;
 		}
 
-		if (isset($svgIcons[$externalLink])) {
+		if ( isset( $svgIcons[$externalLink] ) ) {
 			return Html::rawElement(
 				'a',
-				['href' => $value, 'target' => '__blank'],
+				[ 'href' => $value, 'target' => '__blank' ],
 				$svgIcons[$externalLink]
 			);
 		}
@@ -174,8 +172,7 @@ class UserInformation {
 		return null;
 	}
 
-	private static function generateExternalLinkWithTooltip(string $externalLink, string $value) {
-		
+	private static function generateExternalLinkWithTooltip( string $externalLink, string $value ) {
 		/**
 		 * Icons from iconoir and licensed under the MIT license
 		 */
@@ -183,14 +180,19 @@ class UserInformation {
 			'discord' => '<?xml version="1.0" encoding="UTF-8"?><svg width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000"><path d="M5.5 16C10.5 18.5 13.5 18.5 18.5 16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.5 17.5L16.5 19.5C16.5 19.5 20.6713 18.1717 22 16C22 15 22.5301 7.85339 19 5.5C17.5 4.5 15 4 15 4L14 6H12" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.52832 17.5L7.52832 19.5C7.52832 19.5 3.35699 18.1717 2.02832 16C2.02832 15 1.49823 7.85339 5.02832 5.5C6.52832 4.5 9.02832 4 9.02832 4L10.0283 6H12.0283" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.5 14C7.67157 14 7 13.1046 7 12C7 10.8954 7.67157 10 8.5 10C9.32843 10 10 10.8954 10 12C10 13.1046 9.32843 14 8.5 14Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.5 14C14.6716 14 14 13.1046 14 12C14 10.8954 14.6716 10 15.5 10C16.3284 10 17 10.8954 17 12C17 13.1046 16.3284 14 15.5 14Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
 		];
 
-		if (isset($svgIcons[$externalLink])) {
+		if ( isset( $svgIcons[$externalLink] ) ) {
 			return Html::rawElement(
 				'span',
-				['class' => 'external-link tooltip', 'title' => ucfirst($externalLink), 'username' => $value],
+				[ 'class' => 'external-link tooltip', 'title' => ucfirst( $externalLink ), 'username' => $value ],
 				$svgIcons[$externalLink]
 			);
 		}
 
 		return null;
+	}
+
+	public static function getAvatarForUserProfile( User $user ) {
+		$avatar = new UserProfileV2Avatar( $user->getId() );
+		return $avatar->getAvatarUrl( [ 'raw' => true ] );
 	}
 }

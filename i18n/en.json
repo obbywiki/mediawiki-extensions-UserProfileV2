@@ -1,4 +1,7 @@
 {
 	"apierror-invalidusername": "No user registered with the username '$1' on this wiki.",
-	"userprofilev2-user-locked": "This user account has been globally disabled."
+	"userprofilev2-user-locked": "This user account has been globally disabled.",
+	"userprofilev2-selectavatar": "Select Avatar",
+	"userprofilev2-avatarchanged": "Avatar changed successfully.",
+	"apierror-forbidden": "Forbidden: you do not have permission to change this avatar."
 }
