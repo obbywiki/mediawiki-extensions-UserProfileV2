@@ -41,7 +41,7 @@ $wgFileBackends[] = [
 	'connTimeout' => 10,
 	'reqTimeout' => 900,
 	'containerPaths' => [
-		"global-upv2avatars" => "static-test.telepedia.net/avatars"
+		"global-upv2avatars" => "static-test.telepedia.net/upv2avatars"
 	],
 ];
 ```

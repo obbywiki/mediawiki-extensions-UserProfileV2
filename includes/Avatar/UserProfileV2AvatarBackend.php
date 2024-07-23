@@ -37,24 +37,9 @@ class UserProfileV2AvatarBackend {
 
         $mainConfig = $services->getConfigFactory()->makeConfig('UserProfileV2');
         $upBackend = $mainConfig->get('UserProfileV2Backend');
-        $globalAvatars = $mainConfig->get('UserProfileV2UseGlobalAvatars');
 
         if (!empty($upBackend)) {
             $backend = $services->getFileBackendGroup()->get($upBackend);
-        } elseif ($globalAvatars) {
-            $globalAvatarWiki = $mainConfig->get('UserProfileV2GlobalWiki');
-            $globalAvatarUploadDirectory = $mainConfig->get('UserProfileGlobalUploadDirectory');
-
-            $backend = new FSFileBackend([
-                'name' => "{$this->container}-backend",
-                'wikiId' => $globalAvatarWiki,
-                'lockManager' => new NullLockManager([]),
-                'containerPaths' => [$this->container => "{$globalAvatarUploadDirectory}/{$this->container}"],
-                'fileMode' => 0777,
-                'obResetFunc' => 'wfResetOutputBuffers',
-                'streamMimeFunc' => ['StreamFile', 'contentTypeFromPath'],
-                'statusWrapper' => ['Status', 'wrap'],
-            ]);
         } else {
             $backend = new FSFileBackend([
                 'name' => "{$this->container}-backend",
