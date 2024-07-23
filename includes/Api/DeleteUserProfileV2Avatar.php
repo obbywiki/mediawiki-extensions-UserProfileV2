@@ -14,6 +14,12 @@ use Wikimedia\ParamValidator\ParamValidator;
 
 class DeleteUserProfileV2Avatar extends \ApiBase {
 
+	/** @var UserFactory */
+	private UserFactory $userFactory;
+
+	/** @var PermissionManager */
+	private PermissionManager $permissionManager;
+
 	public function __construct(ApiMain $apiMain, $moduleName, UserFactory $userFactory, PermissionManager $permissionManager) {
 		parent::__construct($apiMain, $moduleName);
 		$this->userFactory = $userFactory;
