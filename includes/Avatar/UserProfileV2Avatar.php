@@ -12,121 +12,121 @@ use StatusValue;
 
 class UserProfileV2Avatar {
 
-	private int $userId;
+    private int $userId;
 
-	public function __construct(int $userId) {
-		$this->userId = $userId;
-	}
+    public function __construct(int $userId) {
+        $this->userId = $userId;
+    }
 
-	/**
-	 * Upload a default avatar
-	 * @return \StatusValue
-	 */
-	private function uploadDefaultAvatar(): StatusValue {
-		$backend = new UserProfileV2AvatarBackend('avatars');
-		return $backend->getFileBackend()->quickStore([
-			'src' => __DIR__ . '/../../resources/avatars/default.jpg',
-			'dst' => $backend->getContainerStoragePath() . '/default.jpg',
-		]);
-	}
+    /**
+     * Upload a default avatar
+     * @return \StatusValue
+     */
+    private function uploadDefaultAvatar(): StatusValue {
+        $backend = new UserProfileV2AvatarBackend('upv2avatars');
+        return $backend->getFileBackend()->quickStore([
+            'src' => __DIR__ . '/../../resources/avatars/default.jpg',
+            'dst' => $backend->getContainerStoragePath() . '/default.jpg',
+        ]);
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getAvatarImage(): string {
-		$wgAvatarKey = 'avatar';
+    /**
+     * @return string
+     */
+    public function getAvatarImage(): string {
+        $wgAvatarKey = 'avatar';
 
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
+        $config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
 
-		$globalAvatars = $config->get('UserProfileV2UseGlobalAvatars');
+        $globalAvatars = $config->get('UserProfileV2UseGlobalAvatars');
 
-		$cache = ObjectCache::getLocalClusterInstance();
+        $cache = ObjectCache::getLocalClusterInstance();
 
-		if ($globalAvatars && ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
+        if ($globalAvatars && ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
 
-			$centralAuthUser = new CentralAuthUser(User::newFromId($this->userId)->getName());
+            $centralAuthUser = new CentralAuthUser(User::newFromId($this->userId)->getName());
 
-			$this->userId = $centralAuthUser->getId(); // overwrite the userId if we're using global avatars
+            $this->userId = $centralAuthUser->getId(); // overwrite the userId if we're using global avatars
 
-			$key = $cache->makeGlobalKey('user', 'userprofilev2', 'avatar', $this->userId);
-		} else {
-			$key = $cache->makeKey('user', 'userprofilev2', 'avatar', $this->userId);
-		}
-		$data = $cache->get($key);
+            $key = $cache->makeGlobalKey('user', 'userprofilev2', 'avatar', $this->userId);
+        } else {
+            $key = $cache->makeKey('user', 'userprofilev2', 'avatar', $this->userId);
+        }
+        $data = $cache->get($key);
 
-		if ($data) {
-			$avatarFilename = $data;
-			return $avatarFilename;
-		} else {
+        if ($data) {
+            $avatarFilename = $data;
+            return $avatarFilename;
+        } else {
 
-			if (!$this->defaultAvatarExists()) {
-				$this->uploadDefaultAvatar();
-			}
+            if (!$this->defaultAvatarExists()) {
+                $this->uploadDefaultAvatar();
+            }
 
-			$avatar_filename = 'default.jpg';
+            $avatar_filename = 'default.jpg';
 
-			$backend = new UserProfileV2AvatarBackend('avatars');
-			$extensions = ['png', 'gif', 'jpg', 'jpeg'];
-			foreach ($extensions as $ext) {
-				if ($backend->fileExists($wgAvatarKey . '_', $this->userId, $ext)) {
-					$avatar_filename = $backend->getFileName(
-						$wgAvatarKey . '_', $this->userId, $ext
-					);
+            $backend = new UserProfileV2AvatarBackend('upv2avatars');
+            $extensions = ['png', 'gif', 'jpg', 'jpeg'];
+            foreach ($extensions as $ext) {
+                if ($backend->fileExists($wgAvatarKey . '_', $this->userId, $ext)) {
+                    $avatar_filename = $backend->getFileName(
+                        $wgAvatarKey . '_', $this->userId, $ext
+                    );
 
-					$avatar_filename .= '?r=' . $backend->getFileBackend()->getFileStat([
-							'src' => $backend->getContainerStoragePath() . '/' . $avatar_filename
-						])['mtime'];
+                    $avatar_filename .= '?r=' . $backend->getFileBackend()->getFileStat([
+                            'src' => $backend->getContainerStoragePath() . '/' . $avatar_filename
+                        ])['mtime'];
 
-					break;
-				}
-			}
-			$cache->set($key, $avatar_filename, 60 * 60 * 24); // cache for 24 hours
-		}
+                    break;
+                }
+            }
+            $cache->set($key, $avatar_filename, 60 * 60 * 24); // cache for 24 hours
+        }
 
-		return $avatar_filename;
-	}
+        return $avatar_filename;
+    }
 
-	/**
-	 * @return mixed|string
-	 */
-	public function getAvatarUrl($extraParams = []) {
-		$backend = new UserProfileV2AvatarBackend('avatars');
+    /**
+     * @return mixed|string
+     */
+    public function getAvatarUrl($extraParams = []) {
+        $backend = new UserProfileV2AvatarBackend('upv2avatars');
 
-		$url = $backend->getFileHttpUrlFromName($this->getAvatarImage());
+        $url = $backend->getFileHttpUrlFromName($this->getAvatarImage());
 
-		if (isset($extraParams['raw']) && $extraParams['raw'] === true) {
-			return $url;
-		}
+        if (isset($extraParams['raw']) && $extraParams['raw'] === true) {
+            return $url;
+        }
 
-		$defaultParams = [
-			'src' => $url,
-			'border' => '0',
-			'class' => 'mw-userprofilev2-avatar'
-		];
+        $defaultParams = [
+            'src' => $url,
+            'border' => '0',
+            'class' => 'mw-userprofilev2-avatar'
+        ];
 
-		$params = array_merge($extraParams, $defaultParams);
+        $params = array_merge($extraParams, $defaultParams);
 
-		return Html::element('img', $params, '');
-	}
+        return Html::element('img', $params, '');
+    }
 
-	/**
-	 * Check if there is a default avatar image with the supplied $size.
-	 *
-	 * @param string $size Avatar image size
-	 * @return bool|null Returns null on failure
-	 */
-	private function defaultAvatarExists(): bool {
-		$backend = new UserProfileV2AvatarBackend('avatars');
-		return $backend->getFileBackend()->fileExists([
-			'src' => $backend->getContainerStoragePath() . '/default.jpg',
-		]);
-	}
+    /**
+     * Check if there is a default avatar image with the supplied $size.
+     *
+     * @param string $size Avatar image size
+     * @return bool|null Returns null on failure
+     */
+    private function defaultAvatarExists(): bool {
+        $backend = new UserProfileV2AvatarBackend('upv2avatars');
+        return $backend->getFileBackend()->fileExists([
+            'src' => $backend->getContainerStoragePath() . '/default.jpg',
+        ]);
+    }
 
-	/**
-	 * Get a string representation of this avatar
-	 * @return mixed|string
-	 */
-	public function __toString() {
-		return $this->getAvatarURL();
-	}
+    /**
+     * Get a string representation of this avatar
+     * @return mixed|string
+     */
+    public function __toString() {
+        return $this->getAvatarURL();
+    }
 }
