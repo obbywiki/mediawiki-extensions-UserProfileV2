@@ -16,7 +16,11 @@ class UploadAvatar extends UploadFromFile {
     public function performUpload($comment, $pageText, $watch, $user, $tags = [], ?string $watchlistExpiry = null) {
         $wgAvatarKey = 'avatar';
 
-        $cacheCon = ObjectCache::getLocalClusterInstance();
+        $config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
+
+        $cacheType = $config->get('UserProfileV2CacheType');
+
+        $cache = $cacheType ? ObjectCache::getInstance($cacheType) : ObjectCache::getLocalClusterInstance();
 
         /**
          * The file is empty, return a fatal
@@ -79,8 +83,13 @@ class UploadAvatar extends UploadFromFile {
             }
         }
 
-        $key = $cacheCon->makeKey('user', 'userprofilev2', 'avatar', $userId);
-        $cacheCon->delete($key);
+        if ($config->get('UserProfileV2UseGlobalAvatars')) {
+            $key = $cache->makeGlobalKey('user', 'userprofilev2', 'avatar', $userId);
+        } else {
+            $key = $cache->makeKey('user', 'userprofilev2', 'avatar', $userId);
+        }
+
+        $cache->delete($key);
 
         $this->mExtension = $ext;
 

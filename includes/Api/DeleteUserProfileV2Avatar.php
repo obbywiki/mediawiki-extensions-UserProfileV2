@@ -72,8 +72,16 @@ class DeleteUserProfileV2Avatar extends \ApiBase {
 
         // delete all the data from the cache for this user, so that the default avatar is loaded on next profile
         // view
-        $cache = ObjectCache::getLocalClusterInstance();
-        $key = $cache->makeKey('user', 'profile', 'avatar', $userId);
+        $cacheType = $config->get('UserProfileV2CacheType');
+
+        $cache = $cacheType ? ObjectCache::getInstance($cacheType) : ObjectCache::getLocalClusterInstance();
+
+        if ($config->get('UserProfileV2UseGlobalAvatars')) {
+            $key = $cache->makeGlobalKey('user', 'userprofilev2', 'avatar', $userId);
+        } else {
+            $key = $cache->makeKey('user', 'userprofilev2', 'avatar', $userId);
+        }
+
         $cache->delete($key);
 
         $this->getResult()->addValue(null, $this->getModuleName(), ['status' => 'OK']);

@@ -39,8 +39,9 @@ class UserProfileV2Avatar {
         $config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
 
         $globalAvatars = $config->get('UserProfileV2UseGlobalAvatars');
+        $cacheType = $config->get('UserProfileV2CacheType');
 
-        $cache = ObjectCache::getLocalClusterInstance();
+        $cache = $cacheType ? ObjectCache::getInstance($cacheType) : ObjectCache::getLocalClusterInstance();
 
         if ($globalAvatars && ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
 
@@ -80,7 +81,7 @@ class UserProfileV2Avatar {
                     break;
                 }
             }
-            $cache->set($key, $avatar_filename, 60 * 60 * 24); // cache for 24 hours
+            $cache->set($key, $avatar_filename, 60 * 60 * 24); // why doesn't this work? @TODO: fix?
         }
 
         return $avatar_filename;

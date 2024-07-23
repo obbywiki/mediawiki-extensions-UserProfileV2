@@ -57,6 +57,7 @@ class UserProfileV2AvatarBackend {
             $backend->prepare(['dir' => $backend->getContainerStoragePath($this->container)]);
         }
 
+
         return $backend;
     }
 
@@ -113,8 +114,7 @@ class UserProfileV2AvatarBackend {
     }
 
     /**
-     * Get the default url path for images. If using global avatars, it will pull from $wgConf the file path
-     * for that wiki. $wgConf therefore is required if using global avatars.
+     * Get the default url path for images. If using global avatars
      * @param $fileName
      * @return string
      */
