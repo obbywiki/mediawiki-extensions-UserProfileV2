@@ -138,7 +138,7 @@ class UserPage extends Article {
 			);
 		}
 
-		$groups = UserInformation::getUserGroups($this->mUserProfile, true);
+		$groups = UserInformation::getUserGroups($this->mUserProfile, UserInformation::shouldShowGlobalGroups($this->mUserProfile));
 
 		if (count($groups) > 0) {
 			foreach ($groups as $group) {
@@ -187,7 +187,7 @@ class UserPage extends Article {
 				"<strong>{$globalEditCount}</strong> global edits"
 			);
 		}
-		
+
 		$html .= Html::closeElement("ul");
 
 		if (count(UserInformation::getProfileLinks($this->mUserProfile)) > 0) {

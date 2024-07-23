@@ -4,6 +4,8 @@ namespace Telepedia\UserProfileV2\Api;
 
 use ApiBase;
 use ApiMain;
+use MediaWiki\Extension\CentralAuth\User\CentralAuthUser;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Permissions\PermissionManager;
 use MediaWiki\User\User;
 use MediaWiki\User\UserFactory;
@@ -20,8 +22,8 @@ class UploadUserProfileV2Avatar extends ApiBase {
 	/** @var PermissionManager */
 	private $permissionManager;
 
-	public function __construct( ApiMain $apiMain, $moduleName, UserFactory $userFactory, PermissionManager $permissionManager ) {
-		parent::__construct( $apiMain, $moduleName );
+	public function __construct(ApiMain $apiMain, $moduleName, UserFactory $userFactory, PermissionManager $permissionManager) {
+		parent::__construct($apiMain, $moduleName);
 		$this->userFactory = $userFactory;
 		$this->permissionManager = $permissionManager;
 	}
@@ -39,47 +41,53 @@ class UploadUserProfileV2Avatar extends ApiBase {
 
 		$user = $this->getUser();
 
-		if ( !UploadBase::isAllowed( $user ) ) {
-			$this->dieWithError( [ 'apierror-forbidden' ] ); // forbidden from uploading
+		if (!UploadBase::isAllowed($user)) {
+			$this->dieWithError(['apierror-forbidden']); // forbidden from uploading
 		}
 
 		$params = $this->extractRequestParams();
 
-		$targetUser = $this->getTargetUser( $params['username'] );
+		$targetUser = $this->getTargetUser($params['username']);
 
-		$permissions = $this->checkPermissions( $user, $targetUser );
+		$permissions = $this->checkPermissions($user, $targetUser);
 
-		if ( !$permissions ) {
-			$this->dieWithError( [ 'apierror-forbidden', wfEscapeWikiText( $targetUser->getName() ) ] );
+		if (!$permissions) {
+			$this->dieWithError(['apierror-forbidden', wfEscapeWikiText($targetUser->getName())]);
 		}
 
-		$params['file'] = $this->getRequest()->getFileName( 'file' );
+		$params['file'] = $this->getRequest()->getFileName('file');
 
-		if ( isset( $params['file'] ) ) {
+		if (isset($params['file'])) {
 			$upload = new UploadAvatar();
 			$upload->initialize(
-				rand() . microtime( true ) . rand(),
-				$this->getRequest()->getUpload( 'file' )
+				rand() . microtime(true) . rand(),
+				$this->getRequest()->getUpload('file')
 			);
 		}
 
 		// if we do not have an upload, lets just die
-		if ( !isset( $upload ) ) {
-			$this->dieWithError( [ 'apierror-nofile' ] );
+		if (!isset($upload)) {
+			$this->dieWithError(['apierror-nofile']);
 		}
 
-		if ( UploadBase::isThrottled( $user ) ) {
-			$this->dieWithError( 'apierror-ratelimited' );
+		if (UploadBase::isThrottled($user)) {
+			$this->dieWithError('apierror-ratelimited');
 		}
 
-		$status = $upload->performUpload( '', '', false, $user );
+		$status = $upload->performUpload('', '', false, $user);
 
 		$result = [];
 
-		if ( $status->isGood() ) {
-			$backend = new UserProfileV2AvatarBackend( 'avatars' );
+		if ($status->isGood()) {
+			$backend = new UserProfileV2AvatarBackend('avatars');
 
-			$userId = $user->getId();
+			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
+
+			if ($config->get('UserProfileV2UseGlobalAvatars')) {
+				$userId = CentralAuthUser::getPrimaryInstanceByName($targetUser->getName())->getId();
+			} else {
+				$userId = $targetUser->getId();
+			}
 
 			$extension = $upload->mExtension;
 
@@ -87,13 +95,13 @@ class UploadUserProfileV2Avatar extends ApiBase {
 
 			$result = [
 				'result' => 'Success',
-				'url' => $backend->getFileHttpUrl( $avatarKey . '_', $userId, $extension ) . '?ts=' . $ts,
+				'url' => $backend->getFileHttpUrl($avatarKey . '_', $userId, $extension) . '?ts=' . $ts,
 			];
 		} else {
-			$this->dieStatus( $status );
+			$this->dieStatus($status);
 		}
 
-		$this->getResult()->addValue( null, $this->getModuleName(), $result );
+		$this->getResult()->addValue(null, $this->getModuleName(), $result);
 
 		// do some cleanup
 		$upload->cleanupTempFile();
@@ -106,16 +114,16 @@ class UploadUserProfileV2Avatar extends ApiBase {
 	 * @param User $targetUser the target user
 	 * @return bool
 	 */
-	private function checkPermissions( User $user, User $targetUser ): bool {
-		if ( !$user->isRegistered() ) {
+	private function checkPermissions(User $user, User $targetUser): bool {
+		if (!$user->isRegistered()) {
 			return false;
 		}
 
-		if ( $user->isBlockedFromUpload() ) {
+		if ($user->isBlockedFromUpload()) {
 			return false;
 		}
 
-		if ( $user->getId() == $targetUser->getId() ) {
+		if ($user->getId() == $targetUser->getId()) {
 			return true;
 		}
 
@@ -128,11 +136,11 @@ class UploadUserProfileV2Avatar extends ApiBase {
 	 * @return User
 	 * @throws \ApiUsageException
 	 */
-	private function getTargetUser( string $username ): User {
-		$user = $this->userFactory->newFromName( $username );
+	private function getTargetUser(string $username): User {
+		$user = $this->userFactory->newFromName($username);
 
-		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $username ) ] );
+		if (!$user->isRegistered()) {
+			$this->dieWithError(['apierror-invalidusername', wfEscapeWikiText($username)]);
 		}
 
 		return $user;
