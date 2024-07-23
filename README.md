@@ -28,9 +28,28 @@ $wgFileBackends[] = [
 ];
 ```
 
-Theoretically it is possible to have global avatars (instead of each wiki using its own avatars) if you
-set `$wgFileBackends['userprofilev2']['wikiId]` to a central wiki instead of dynamically setting it via `$wgDBname`.
-This has not been tested yet.
+It is possible to have global avatars (instead of each wiki using its own avatars) if you
+set `$wgFileBackends` to something like:
+
+```php
+$wgFileBackends[] = [
+	'class' => 'AmazonS3FileBackend',
+	'name' => 'telepedia-userprofile',
+	'region' => 'eu-west-2',
+	'wikiId' => 'global',
+	'lockManager' => 'nullLockManager',
+	'connTimeout' => 10,
+	'reqTimeout' => 900,
+	'containerPaths' => [
+		"global-upv2avatars" => "static-test.telepedia.net/avatars"
+	],
+];
+```
+
+I would recommend using the AWS extension. You will also need to set stuff like `$wgAWSBucketName`. When using global
+avatars you must provide the base url for use in constructing the avatars,
+ie: `$wgUserProfileGlobalUploadBaseUrl = 'https://s3.eu-west-2.amazonaws.com/static-test.telepedia.net';
+`; the path to the file will be appended automatically.
 
 If you do not provide `$wgUserProfileV2Backend` then the extension will construct a `new FSFileBackend([])` with
 configuration for individual wiki avatars.
