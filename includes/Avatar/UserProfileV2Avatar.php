@@ -14,7 +14,7 @@ class UserProfileV2Avatar {
 
 	private int $userId;
 
-	public function __construct( int $userId ) {
+	public function __construct(int $userId) {
 		$this->userId = $userId;
 	}
 
@@ -23,11 +23,11 @@ class UserProfileV2Avatar {
 	 * @return \StatusValue
 	 */
 	private function uploadDefaultAvatar(): StatusValue {
-		$backend = new UserProfileV2AvatarBackend( 'avatars' );
-		return $backend->getFileBackend()->quickStore( [
+		$backend = new UserProfileV2AvatarBackend('avatars');
+		return $backend->getFileBackend()->quickStore([
 			'src' => __DIR__ . '/../../resources/avatars/default.jpg',
 			'dst' => $backend->getContainerStoragePath() . '/default.jpg',
-		] );
+		]);
 	}
 
 	/**
@@ -36,52 +36,51 @@ class UserProfileV2Avatar {
 	public function getAvatarImage(): string {
 		$wgAvatarKey = 'avatar';
 
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'UserProfileV2' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
 
-		$globalAvatars = $config->get( 'UserProfileV2UseGlobalAvatars' );
+		$globalAvatars = $config->get('UserProfileV2UseGlobalAvatars');
 
 		$cache = ObjectCache::getLocalClusterInstance();
 
-		if ( $globalAvatars && ExtensionRegistry::getInstance()->isLoaded( 'CentralAuth' ) ) {
+		if ($globalAvatars && ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
 
-			$centralAuthUser = new CentralAuthUser( User::newFromId( $this->userId )->getName() );
+			$centralAuthUser = new CentralAuthUser(User::newFromId($this->userId)->getName());
 
 			$this->userId = $centralAuthUser->getId(); // overwrite the userId if we're using global avatars
 
-			$key = $cache->makeGlobalKey( 'user', 'userprofilev2', 'avatar', $this->userId );
+			$key = $cache->makeGlobalKey('user', 'userprofilev2', 'avatar', $this->userId);
 		} else {
-			$key = $cache->makeKey( 'user', 'userprofilev2', 'avatar', $this->userId );
+			$key = $cache->makeKey('user', 'userprofilev2', 'avatar', $this->userId);
 		}
-		$data = $cache->get( $key );
+		$data = $cache->get($key);
 
-		if ( $data ) {
+		if ($data) {
 			$avatarFilename = $data;
 			return $avatarFilename;
 		} else {
 
-			if ( !$this->defaultAvatarExists() ) {
+			if (!$this->defaultAvatarExists()) {
 				$this->uploadDefaultAvatar();
 			}
 
 			$avatar_filename = 'default.jpg';
 
-			$backend = new UserProfileV2AvatarBackend( 'avatars' );
-			$extensions = [ 'png', 'gif', 'jpg', 'jpeg', 'webp' ];
-			foreach ( $extensions as $ext ) {
-				if ( $backend->fileExists( $wgAvatarKey . '_', $this->userId, $ext ) ) {
+			$backend = new UserProfileV2AvatarBackend('avatars');
+			$extensions = ['png', 'gif', 'jpg', 'jpeg', 'webp'];
+			foreach ($extensions as $ext) {
+				if ($backend->fileExists($wgAvatarKey . '_', $this->userId, $ext)) {
 					$avatar_filename = $backend->getFileName(
 						$wgAvatarKey . '_', $this->userId, $ext
 					);
 
-					// @phan-suppress-next-line PhanTypeArraySuspiciousNullable Not sure why phan is unhappy
-					$avatar_filename .= '?r=' . $backend->getFileBackend()->getFileStat( [
+					$avatar_filename .= '?r=' . $backend->getFileBackend()->getFileStat([
 							'src' => $backend->getContainerStoragePath() . '/' . $avatar_filename
-						] )['mtime'];
+						])['mtime'];
 
 					break;
 				}
 			}
-			$cache->set( $key, $avatar_filename, 60 * 60 * 24 ); // cache for 24 hours
+			$cache->set($key, $avatar_filename, 60 * 60 * 24); // cache for 24 hours
 		}
 
 		return $avatar_filename;
@@ -90,12 +89,12 @@ class UserProfileV2Avatar {
 	/**
 	 * @return mixed|string
 	 */
-	public function getAvatarUrl( $extraParams = [] ) {
-		$backend = new UserProfileV2AvatarBackend( 'avatars' );
+	public function getAvatarUrl($extraParams = []) {
+		$backend = new UserProfileV2AvatarBackend('avatars');
 
-		$url = $backend->getFileHttpUrlFromName( $this->getAvatarImage() );
+		$url = $backend->getFileHttpUrlFromName($this->getAvatarImage());
 
-		if ( isset( $extraParams['raw'] ) && $extraParams['raw'] === true ) {
+		if (isset($extraParams['raw']) && $extraParams['raw'] === true) {
 			return $url;
 		}
 
@@ -105,9 +104,9 @@ class UserProfileV2Avatar {
 			'class' => 'mw-userprofilev2-avatar'
 		];
 
-		$params = array_merge( $extraParams, $defaultParams );
+		$params = array_merge($extraParams, $defaultParams);
 
-		return Html::element( 'img', $params, '' );
+		return Html::element('img', $params, '');
 	}
 
 	/**
@@ -117,10 +116,10 @@ class UserProfileV2Avatar {
 	 * @return bool|null Returns null on failure
 	 */
 	private function defaultAvatarExists(): bool {
-		$backend = new UserProfileV2AvatarBackend( 'avatars' );
-		return $backend->getFileBackend()->fileExists( [
+		$backend = new UserProfileV2AvatarBackend('avatars');
+		return $backend->getFileBackend()->fileExists([
 			'src' => $backend->getContainerStoragePath() . '/default.jpg',
-		] );
+		]);
 	}
 
 	/**
