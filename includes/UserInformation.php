@@ -46,7 +46,7 @@ class UserInformation {
 		$userGroupManager = MediaWikiServices::getInstance()->getUserGroupManager();
 		$localGroups = $userGroupManager->getUserGroups($user); // the local groups the user belongs to
 
-		$centralAuthLoaded = ExtensionRegistry::getInstance()->isLoaded('CentralAuth');
+		$centralAuthLoaded = self::isCentralAuthLoaded();
 
 		if ($global && $centralAuthLoaded) {
 			$centralAuthUser = CentralAuthUser::getInstance($user);
@@ -113,8 +113,10 @@ class UserInformation {
 	 * @return bool
 	 */
 	public static function isLocked(User $user): bool {
-		if (!ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
-			return false; // just return false if we don't have CA, we don't care
+
+		// if CA isn't loaded, we can never be locked so return false.
+		if (!self::isCentralAuthLoaded()) {
+			return false;
 		}
 
 		return CentralAuthUser::getInstance($user)->isLocked();
@@ -210,7 +212,7 @@ class UserInformation {
 	 */
 	public static function getGlobalEditCount(User $user): int|null {
 
-		if (!ExtensionRegistry::getInstance()->isLoaded('CentralAuth')) {
+		if (!self::isCentralAuthLoaded()) {
 			return null;
 		}
 
@@ -230,10 +232,35 @@ class UserInformation {
 	 */
 	public static function shouldShowGlobalEditCount(User $user): bool {
 
+		if (!self::isCentralAuthLoaded()) {
+			return false;
+		}
+
 		$userOptionsLookup = MediaWikiServices::getInstance()->getUserOptionsLookup();
 
 		$shouldShow = $userOptionsLookup->getOption($user, 'profile-show-globaledits');
 
 		return $shouldShow == 1;
+	}
+
+	public static function shouldShowGlobalGroups(User $user): bool {
+
+		if (!self::isCentralAuthLoaded()) {
+			return false;
+		}
+
+		$userOptionsLookup = MediaWikiServices::getInstance()->getUserOptionsLookup();
+
+		$shouldShow = $userOptionsLookup->getOption($user, 'profile-show-globalgroups');
+
+		return $shouldShow == 1;
+	}
+
+	/**
+	 * Helper function to double check if CA is loaded
+	 * @return bool
+	 */
+	private static function isCentralAuthLoaded(): bool {
+		return ExtensionRegistry::getInstance()->isLoaded('CentralAuth');
 	}
 }

@@ -52,7 +52,7 @@ class UploadAvatar extends UploadFromFile {
 
 		$userProfileAvatar = new UserProfileV2Avatar($userId);
 
-		$this->createThumbnail($this->mTempPath, $imageInfo, $wgAvatarKey . '_' . $userId, 75);
+		$this->createThumbnail($this->mTempPath, $imageInfo, $wgAvatarKey . '_' . $userId, 138);
 
 		$extensions = ['jpg', 'gif', 'png', 'jpeg', 'webp'];
 
@@ -97,79 +97,155 @@ class UploadAvatar extends UploadFromFile {
 
 		$fileBackend = $backend->getFileBackend();
 		$status = $fileBackend->prepare(['dir' => $fname]);
-		if (!$status->isOK()) {
-			throw new Exception(
-				wfMessage('backend-fail-internal', Status::wrap($status)->getWikitext())
-			);
-		}
-
-		[$origWidth, $origHeight, $typeCode] = getimagesize($imageSrc);
-
-		$fullImage = '';
-		$ext = '';
-
-		switch ($typeCode) {
-			case '1':
-				$fullImage = imagecreatefromgif($imageSrc);
-				$ext = 'gif';
-				break;
-			case '2':
-				$fullImage = imagecreatefromjpeg($imageSrc);
-				$ext = 'jpg';
-				break;
-			case '3':
-				$fullImage = imagecreatefrompng($imageSrc);
-				$ext = 'png';
-				break;
-		}
-
-		$scale = ($thumbWidth / $origWidth);
-
-		// Create our thumbnail size, so we can resize to this, and save it.
-		$tnImage = imagecreatetruecolor(
-			$origWidth * $scale,
-			$origHeight * $scale
-		);
-
-		// Resize the image.
-		imagecopyresampled(
-			$tnImage,
-			$fullImage,
-			0, 0, 0, 0,
-			$origWidth * $scale,
-			$origHeight * $scale,
-			$origWidth,
-			$origHeight
-		);
-
-		// Create a new image thumbnail.
-		if ($typeCode == 1) {
-			imagegif($tnImage, $imageSrc);
-		} elseif ($typeCode == 2) {
-			imagejpeg($tnImage, $imageSrc);
-		} elseif ($typeCode == 3) {
-			imagepng($tnImage, $imageSrc);
-		}
-
-		// Clean up.
-		imagedestroy($fullImage);
-		imagedestroy($tnImage);
-
-		// Copy the thumb
-		copy(
-			$imageSrc,
-			wfTempDir() . '/' . $imgDest . '.' . $ext
-		);
-
-		$status = $fileBackend->quickStore([
-			'src' => wfTempDir() . '/' . $imgDest . '.' . $ext,
-			'dst' => $fname . '/' . $imgDest . '.' . $ext
-		]);
 
 		if (!$status->isOK()) {
 			throw new Exception(
 				wfMessage('backend-fail-internal', Status::wrap($status)->getWikitext())
 			);
+		}
+
+		// shamefully copied from SocialProfile
+
+		global $wgUseImageMagick, $wgImageMagickConvertCommand;
+
+		if ($wgUseImageMagick) { // ImageMagick is enabled
+			[$origWidth, $origHeight, $typeCode] = $imageInfo;
+
+			if ($origWidth < $thumbWidth) {
+				$thumbWidth = $origWidth;
+			}
+			$thumbHeight = ($thumbWidth * $origHeight / $origWidth);
+			$border = ' -bordercolor white  -border  0x';
+			if ($thumbHeight < $thumbWidth) {
+				$border = ' -bordercolor white  -border  0x' . (($thumbWidth - $thumbHeight) / 2);
+			}
+			if ($typeCode == 2) {
+				exec(
+					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth . 'x' . $thumbWidth .
+					' -resize ' . $thumbWidth . ' -crop ' . $thumbWidth . 'x' .
+					$thumbWidth . '+0+0   -quality 100 ' . $border . ' ' .
+					$imageSrc . ' ' . wfTempDir() . '/' . $imgDest . '.jpg'
+				);
+
+				$status = $fileBackend->quickStore([
+					'src' => wfTempDir() . '/' . $imgDest . '.jpg',
+					'dst' => $fname . '/' . $imgDest . '.jpg'
+				]);
+
+				if (!$status->isOK()) {
+					throw new Exception(
+						wfMessage('backend-fail-internal', Status::wrap($status)->getWikitext())
+					);
+				}
+			}
+			if ($typeCode == 1) {
+				exec(
+					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth . 'x' . $thumbWidth .
+					' -resize ' . $thumbWidth . ' -crop ' . $thumbWidth . 'x' .
+					$thumbWidth . '+0+0 ' . $imageSrc . ' ' . $border . ' ' .
+					wfTempDir() . '/' . $imgDest . '.gif'
+				);
+
+				$status = $fileBackend->quickStore([
+					'src' => wfTempDir() . '/' . $imgDest . '.gif',
+					'dst' => $fname . '/' . $imgDest . '.gif'
+				]);
+
+				if (!$status->isOK()) {
+					throw new Exception(
+						wfMessage('backend-fail-internal', Status::wrap($status)->getWikitext())
+					);
+				}
+			}
+			if ($typeCode == 3) {
+				exec(
+					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth . 'x' . $thumbWidth .
+					' -resize ' . $thumbWidth . ' -crop ' . $thumbWidth . 'x' .
+					$thumbWidth . '+0+0 ' . $imageSrc . ' ' .
+					wfTempDir() . '/' . $imgDest . '.png'
+				);
+
+				$status = $fileBackend->quickStore([
+					'src' => wfTempDir() . '/' . $imgDest . '.png',
+					'dst' => $fname . '/' . $imgDest . '.png'
+				]);
+
+				if (!$status->isOK()) {
+					throw new Exception(
+						wfMessage('backend-fail-internal', Status::wrap($status)->getWikitext())
+					);
+				}
+			}
+		} else { // ImageMagick is not enabled, so fall back to PHP's GD library
+			// Get the image size, used in calculations later.
+			[$origWidth, $origHeight, $typeCode] = getimagesize($imageSrc);
+
+			$fullImage = '';
+			$ext = '';
+
+			switch ($typeCode) {
+				case '1':
+					$fullImage = imagecreatefromgif($imageSrc);
+					$ext = 'gif';
+					break;
+				case '2':
+					$fullImage = imagecreatefromjpeg($imageSrc);
+					$ext = 'jpg';
+					break;
+				case '3':
+					$fullImage = imagecreatefrompng($imageSrc);
+					$ext = 'png';
+					break;
+			}
+
+			$scale = ($thumbWidth / $origWidth);
+
+			// Create our thumbnail size, so we can resize to this, and save it.
+			$tnImage = imagecreatetruecolor(
+				$origWidth * $scale,
+				$origHeight * $scale
+			);
+
+			// Resize the image.
+			imagecopyresampled(
+				$tnImage,
+				$fullImage,
+				0, 0, 0, 0,
+				$origWidth * $scale,
+				$origHeight * $scale,
+				$origWidth,
+				$origHeight
+			);
+
+			// Create a new image thumbnail.
+			if ($typeCode == 1) {
+				imagegif($tnImage, $imageSrc);
+			} elseif ($typeCode == 2) {
+				imagejpeg($tnImage, $imageSrc);
+			} elseif ($typeCode == 3) {
+				imagepng($tnImage, $imageSrc);
+			}
+
+			// Clean up.
+			imagedestroy($fullImage);
+			imagedestroy($tnImage);
+
+			// Copy the thumb
+			copy(
+				$imageSrc,
+				wfTempDir() . '/' . $imgDest . '.' . $ext
+			);
+
+			$status = $fileBackend->quickStore([
+				'src' => wfTempDir() . '/' . $imgDest . '.' . $ext,
+				'dst' => $fname . '/' . $imgDest . '.' . $ext
+			]);
+
+			if (!$status->isOK()) {
+				throw new Exception(
+					wfMessage('backend-fail-internal', Status::wrap($status)->getWikitext())
+				);
+			}
 		}
 	}
 

@@ -66,7 +66,7 @@ class UserProfileV2Avatar {
 			$avatar_filename = 'default.jpg';
 
 			$backend = new UserProfileV2AvatarBackend('avatars');
-			$extensions = ['png', 'gif', 'jpg', 'jpeg', 'webp'];
+			$extensions = ['png', 'gif', 'jpg', 'jpeg'];
 			foreach ($extensions as $ext) {
 				if ($backend->fileExists($wgAvatarKey . '_', $this->userId, $ext)) {
 					$avatar_filename = $backend->getFileName(
