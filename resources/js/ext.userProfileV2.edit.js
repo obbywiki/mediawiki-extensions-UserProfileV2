@@ -252,6 +252,9 @@ $(document).ready(function () {
 				let avatar = fileInputWidget.currentFiles[0];
 				if (avatar) {
 					let reader = new FileReader();
+					reader.onload = function (e) {
+						this.updateAvatarDisplay(e.target.result);
+					}.bind(this);
 					reader.readAsDataURL(avatar);
 
 					this.selectedFile = avatar;
@@ -284,6 +287,8 @@ $(document).ready(function () {
 				return new OO.ui.Process(function () {
 					if (dialog.selectedFile) {
 						return changeAvatar(dialog.selectedFile).then(function (response) {
+							const avatarUrl = response.userprofilev2uploadavatar.url;
+							$('.profile-avatar-image').attr('src', avatarUrl);
 							dialog.close({action: action});
 							mw.notify(mw.message('userprofilev2-avatarchanged'));
 						}).catch(function (error) {

@@ -13,7 +13,7 @@
 	border: 2px solid grey;
 	border-radius: @userprofile-avatar-border-radius;
 	height: 138px;
-	object-fit: cover;
+	object-fit: contain;
 	width: 138px;
 }
 
@@ -33,7 +33,7 @@
 .profile-header {
 	display: flex;
 	width: 100%;
-	align-items: center; /* Ensure alignment */
+	align-items: center;
 }
 
 .profile-header-attributes {
@@ -42,8 +42,8 @@
 
 .profile-header-attributes > h1,
 .profile-header-attributes > h2 {
-	display: inline-block; /* Make elements inline-block */
-	vertical-align: middle; /* Align text vertically */
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .profile-header-attributes > h1 {
