@@ -82,26 +82,36 @@ class UserPage extends Article {
      * @return string
      */
     private function getProfileLayout(UserInformation $userInformation) {
+
+        // open masthead
         $html = Html::openElement(
             "div",
             ["class" => "profile-masthead"]
         );
+
+        // open wrapper
         $html .= Html::openElement(
             "div",
             ["class" => "profile-wrapper"]
         );
+
+        // open identity box
         $html .= Html::openElement(
             "section",
             ["class" => "profile-identitybox"]
         );
+
+        // open avatar
         $html .= Html::openElement(
             "div",
             ["class" => "profile-avatar"]
         );
+
         $html .= Html::element(
             "img",
             ["class" => "profile-avatar-image", "src" => $userInformation->getAvatarForUserProfile()]
         );
+
         if ($this->canEditProfile()) {
             $html .= Html::openElement(
                 "div",
@@ -116,22 +126,30 @@ class UserPage extends Article {
                 'div'
             );
         }
-        $html .= Html::closeElement("div");
+
+        // close avatar
+        $html .= Html::closeElement(
+            "div"
+        );
+
+        // open information
         $html .= Html::openElement(
             "div",
             ["class" => "profile-information"]
         );
 
-        // begin the header (where the username, groups etc are)
+        // open heder
         $html .= Html::openElement(
             "div",
             ["class" => "profile-header"]
         );
-        // user groups etc
+
+        // open attributes
         $html .= Html::openElement(
             "div",
             ["class" => "profile-header-attributes"]
         );
+
         $html .= Html::element(
             "h1",
             [],
@@ -158,9 +176,11 @@ class UserPage extends Article {
             }
         }
 
-        $html .= Html::closeElement("div");
+        // close attributes
+        $html .= Html::closeElement(
+            "div"
+        );
 
-        // edit button
         $html .= Html::openElement(
             "div",
             ["class" => "profile-header-actions"]
@@ -172,14 +192,23 @@ class UserPage extends Article {
                 "Edit"
             );
         }
-        $html .= Html::closeElement("div");
-        $html .= Html::closeElement("div");
 
-        // edit count etc
+        // close header
+        $html .= Html::closeElement(
+            "div"
+        );
+
+        // close information
+        $html .= Html::closeElement(
+            "div"
+        );
+
+        // open statistics
         $html .= Html::openElement(
             "ul",
             ['class' => 'profile-header-statistics']
         );
+
         $html .= Html::rawElement(
             "li",
             [],
@@ -196,7 +225,10 @@ class UserPage extends Article {
             );
         }
 
-        $html .= Html::closeElement("ul");
+        // close statistics
+        $html .= Html::closeElement(
+            "ul"
+        );
 
         if (count($userInformation->getProfileLinks()) > 0) {
 
@@ -211,26 +243,35 @@ class UserPage extends Article {
 
             $html .= Html::closeElement("div");
         }
+
         $html .= Html::element(
             "div",
             ['class' => 'profile-header-about'],
             $userInformation->getUserBiography()
         );
-        $html .= Html::closeElement("div");
-        $html .= Html::closeElement("div");
-        $html .= Html::closeElement("div");
-        // END Profile header
-        $html .= Html::closeElement("div");
 
-        // END profile information section
-        $html .= Html::closeElement("section");
+        // close identity box
+        $html .= Html::closeElement(
+            "section"
+        );
+
+
+        // close wrapper
+        $html .= Html::closeElement(
+            "div"
+        );
+
+        // close masthead
+        $html .= Html::closeElement(
+            "div"
+        );
 
         if ($userInformation->isLocked()) {
             $html .= Html::warningBox(
                 $this->getContext()->msg('userprofilev2-user-locked')->plain()
             );
         }
-
+        
         /**
          * Run our hook which modifies the output after the masthead and before the contents.
          */
