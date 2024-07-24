@@ -1,8 +1,16 @@
 {
-	"apierror-invalidusername": "No user registered with the username '$1' on this wiki.",
-	"userprofilev2-user-locked": "This user account has been globally disabled.",
-	"userprofilev2-selectavatar": "Select Avatar",
-	"userprofilev2-avatarchanged": "Avatar changed successfully.",
-	"apierror-forbidden": "Forbidden: you do not have permission to change this avatar.",
-	"userprofilev2-avatardeleted": "Avatar deleted successfully."
+  "apierror-invalidusername": "No user registered with the username '$1' on this wiki.",
+  "userprofilev2-user-locked": "This user account has been globally disabled.",
+  "userprofilev2-selectavatar": "Select Avatar",
+  "userprofilev2-avatarchanged": "Avatar changed successfully.",
+  "apierror-forbidden": "Forbidden: you do not have permission to change this avatar.",
+  "apierror-nofile": "No file was provided to upload.",
+  "apierror-ratelimited": "You cannot upload images at this time.",
+  "userprofilev2-avatardeleted": "Avatar deleted successfully.",
+  "prefs-profile": "ProfileV2",
+  "aboutme": "About Me",
+  "discord": "Discord",
+  "twitter": "Twitter",
+  "mastodon": "Mastodon",
+  "aboutmeplaceholder": "Write something about yourself..."
 }
