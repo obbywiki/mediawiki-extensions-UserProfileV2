@@ -1,4 +1,9 @@
 {
+	"@metadata": {
+		"authors": [
+			"Original Authority"
+		]
+	},
 	"apierror-invalidusername": "No user registered with the username '$1' on this wiki.",
 	"userprofilev2-user-locked": "This user account has been globally disabled.",
 	"userprofilev2-selectavatar": "Select Avatar",
@@ -7,7 +12,6 @@
 	"apierror-nofile": "No file was provided to upload.",
 	"apierror-ratelimited": "You cannot upload images at this time.",
 	"userprofilev2-avatardeleted": "Avatar deleted successfully.",
-	"prefs-profile": "ProfileV2",
 	"aboutme": "About Me",
 	"discord": "Discord Username",
 	"twitter": "Twitter Username",

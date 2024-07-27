@@ -1,13 +1,31 @@
 {
-	"apierror-invalidusername": "Error message shown when a user account wasn't found.",
+	"@metadata": {
+		"authors": [
+			"Original Authority"
+		]
+	},
+	"apierror-invalidusername": "Error message returned by the API when someone tried to change the profile of a non-existing user.",
 	"userprofilev2-user-locked": "Warning message shown on profile of a user profile when their account is locked via CentralAuth",
 	"userprofilev2-selectavatar": "Button text for uploading an avatar",
 	"userprofilev2-avatarchanged": "Text that displays in a bubble notification when an avatar has been successfully changed.",
-	"apierror-forbidden": "Error message shown when a user doesn't have permission to change an avatar.",
+	"apierror-forbidden": "Error message returned by the API when a user doesn't have permission to change an avatar.",
+	"apierror-nofile": "Error message returned by the API when someone tried to change an avatar but no file was sent with the request.",
+	"apierror-ratelimited": "Error message returned by the API when someone is rate limited from uploading images.",
 	"userprofilev2-avatardeleted": "Message shown in bubble notification when an avatar has been successfully deleted.",
-	"prefs-profile": "Name of the tab that preferences show under.",
-	"aboutmeplaceholder": "Write something about yourself...",
-	"discordplaceholder": "Placeholder for Discord username box",
-	"twitterplaceholder": "Placeholder for twitter username box",
-	"mastodonplaceholder": "Placeholder for mastodon username box"
+	"aboutme": "Label text for \"about me\" input box",
+	"discord": "Label text for \"Discord username\" input box",
+	"twitter": "Label text for \"Twitter username\" input box",
+	"mastodon": "Label text for \"Mastodon username\" input box",
+	"aboutmeplaceholder": "Placeholder text for the \"about me\" input box",
+	"discordplaceholder": "Placeholder for \"Discord username\" input box",
+	"twitterplaceholder": "Placeholder for \"twitter username\" input box",
+	"mastodonplaceholder": "Placeholder for \"Mastodon username\" input box",
+	"showglobalgroups": "Label text for checkbox that toggles whether global groups are shown on a profile.",
+	"showglobaleditcount": "Label text for checkbox that toggles whether global edits are shown on a profile.",
+	"showglobalgroupshelp": "Help text for checkbox that toggles whether global groups are shown on a profile.",
+	"showglobaleditcounthelp": "Help text for checkbox that toggles whether global edits are shown on a profile.",
+	"mastodonhelp": "Help text for Mastodon username input.",
+	"twitterhelp": "Help text for Twitter username input.",
+	"discordhelp": "Help text for Discord username input.",
+	"aboutmehelp": "Help text for \"about me\" input box."
 }
