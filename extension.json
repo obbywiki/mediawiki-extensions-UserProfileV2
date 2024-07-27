@@ -74,7 +74,21 @@
 				"userprofilev2-selectavatar",
 				"userprofilev2-avatarchanged",
 				"apierror-forbidden",
-				"userprofilev2-avatardeleted"
+				"userprofilev2-avatardeleted",
+				"discordplaceholder",
+				"twitterplaceholder",
+				"mastodonplaceholder",
+				"discord",
+				"twitter",
+				"mastodon",
+				"mastodonhelp",
+				"twitterhelp",
+				"discordhelp",
+				"aboutmehelp",
+				"showglobalgroups",
+				"showglobalgroupshelp",
+				"showglobaleditcount",
+				"showglobaleditcounthelp"
 			]
 		},
 		"ext.userProfileV2.styles": {
