@@ -19,8 +19,8 @@ class UserProfileV2AvatarBackend {
 	/**
 	 * @param string|null $container the container we want, will most likely be "avatar". Put this here for future ;)
 	 */
-	public function __construct(string $container = null) {
-		if (!$container) {
+	public function __construct( string $container = null ) {
+		if ( !$container ) {
 			$container = 'upv2avatars'; // change because SocialProfile uses "Avatars"
 		}
 
@@ -35,28 +35,27 @@ class UserProfileV2AvatarBackend {
 	public function getFileBackend() {
 		$services = MediaWikiServices::getInstance();
 
-		$mainConfig = $services->getConfigFactory()->makeConfig('UserProfileV2');
-		$upBackend = $mainConfig->get('UserProfileV2Backend');
+		$mainConfig = $services->getConfigFactory()->makeConfig( 'UserProfileV2' );
+		$upBackend = $mainConfig->get( 'UserProfileV2Backend' );
 
-		if (!empty($upBackend)) {
-			$backend = $services->getFileBackendGroup()->get($upBackend);
+		if ( !empty( $upBackend ) ) {
+			$backend = $services->getFileBackendGroup()->get( $upBackend );
 		} else {
-			$backend = new FSFileBackend([
+			$backend = new FSFileBackend( [
 				'name' => "{$this->container}-backend",
 				'wikiId' => WikiMap::getCurrentWikiId(),
-				'lockManager' => new NullLockManager([]),
-				'containerPaths' => [$this->container => "{$mainConfig->get( 'UploadDirectory' )}/{$this->container}"],
+				'lockManager' => new NullLockManager( [] ),
+				'containerPaths' => [ $this->container => "{$mainConfig->get( 'UploadDirectory' )}/{$this->container}" ],
 				'fileMode' => 0777,
 				'obResetFunc' => 'wfResetOutputBuffers',
-				'streamMimeFunc' => ['StreamFile', 'contentTypeFromPath'],
-				'statusWrapper' => ['Status', 'wrap'],
-			]);
+				'streamMimeFunc' => [ 'StreamFile', 'contentTypeFromPath' ],
+				'statusWrapper' => [ 'Status', 'wrap' ],
+			] );
 		}
 
-		if (!$backend->directoryExists(['dir' => $backend->getContainerStoragePath($this->container)])) {
-			$backend->prepare(['dir' => $backend->getContainerStoragePath($this->container)]);
+		if ( !$backend->directoryExists( [ 'dir' => $backend->getContainerStoragePath( $this->container ) ] ) ) {
+			$backend->prepare( [ 'dir' => $backend->getContainerStoragePath( $this->container ) ] );
 		}
-
 
 		return $backend;
 	}
@@ -68,10 +67,10 @@ class UserProfileV2AvatarBackend {
 	 * @param $ext
 	 * @return string|null
 	 */
-	public function getPath($prefix, $id, $ext) {
+	public function getPath( $prefix, $id, $ext ) {
 		return $this->getFileBackend()->normalizeStoragePath(
 			$this->getContainerStoragePath() .
-			'/' . $this->getFileName($prefix, $id, $ext)
+			'/' . $this->getFileName( $prefix, $id, $ext )
 		);
 	}
 
@@ -82,7 +81,7 @@ class UserProfileV2AvatarBackend {
 	 * @param $ext
 	 * @return string
 	 */
-	public function getFileName($prefix, $id, $ext) {
+	public function getFileName( $prefix, $id, $ext ) {
 		return $prefix . (string)$id . '.' . $ext;
 	}
 
@@ -92,7 +91,7 @@ class UserProfileV2AvatarBackend {
 	 * @return string Storage path
 	 */
 	public function getContainerStoragePath() {
-		return $this->getFileBackend()->getContainerStoragePath($this->container);
+		return $this->getFileBackend()->getContainerStoragePath( $this->container );
 	}
 
 	/**
@@ -101,16 +100,16 @@ class UserProfileV2AvatarBackend {
 	 * @param $ext - file extension
 	 * @return mixed
 	 */
-	public function getFileHttpUrl($prefix, $id, $ext) {
-		return $this->getDefaultUrlPath($this->getFileName($prefix, $id, $ext));
+	public function getFileHttpUrl( $prefix, $id, $ext ) {
+		return $this->getDefaultUrlPath( $this->getFileName( $prefix, $id, $ext ) );
 	}
 
 	/**
 	 * @param $fileName
 	 * @return mixed
 	 */
-	public function getFileHttpUrlFromName($fileName) {
-		return $this->getDefaultUrlPath($fileName);
+	public function getFileHttpUrlFromName( $fileName ) {
+		return $this->getDefaultUrlPath( $fileName );
 	}
 
 	/**
@@ -118,21 +117,21 @@ class UserProfileV2AvatarBackend {
 	 * @param $fileName
 	 * @return string
 	 */
-	public function getDefaultUrlPath($fileName): string {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('UserProfileV2');
+	public function getDefaultUrlPath( $fileName ): string {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'UserProfileV2' );
 
-		if ($config->get('UserProfileGlobalUploadBaseUrl')) {
-			$uploadPath = $config->get('UserProfileGlobalUploadBaseUrl') ?
-				$config->get('UserProfileGlobalUploadBaseUrl') .
-				$config->get('UserProfileGlobalUploadDirectory') :
-				$config->get('UserProfileGlobalUploadDirectory');
+		if ( $config->get( 'UserProfileGlobalUploadBaseUrl' ) ) {
+			$uploadPath = $config->get( 'UserProfileGlobalUploadBaseUrl' ) ?
+				$config->get( 'UserProfileGlobalUploadBaseUrl' ) .
+				$config->get( 'UserProfileGlobalUploadDirectory' ) :
+				$config->get( 'UserProfileGlobalUploadDirectory' );
 
 			return $uploadPath . '/' . $this->container . '/' . $fileName;
 		}
 
-		$uploadPath = $config->get('UploadBaseUrl') ? $config->get('UploadBaseUrl') .
-			$config->get('UploadPath') :
-			$config->get('UploadPath');
+		$uploadPath = $config->get( 'UploadBaseUrl' ) ? $config->get( 'UploadBaseUrl' ) .
+			$config->get( 'UploadPath' ) :
+			$config->get( 'UploadPath' );
 
 		return $uploadPath . '/' . $this->container . '/' . $fileName;
 	}
@@ -145,11 +144,11 @@ class UserProfileV2AvatarBackend {
 	 * @param $ext
 	 * @return bool|null
 	 */
-	public function fileExists($prefix, $id, $ext) {
-		return $this->getFileBackend()->fileExists([
+	public function fileExists( $prefix, $id, $ext ) {
+		return $this->getFileBackend()->fileExists( [
 			'src' => $this->getPath(
 				$prefix, $id, $ext
 			)
-		]);
+		] );
 	}
 }
