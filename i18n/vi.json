@@ -1,0 +1,32 @@
+{   
+    "@metadata": {
+		"authors": [
+			"SongNgu.xyz"
+		]
+	},
+	"apierror-invalidusername": "Không có người dùng '$1' tại wiki này.",
+	"userprofilev2-user-locked": "Tài khoản người dùng này đã bị khóa toàn cục.",
+	"userprofilev2-selectavatar": "Chọn hình đại diện",
+	"userprofilev2-avatarchanged": "Đã thay đổi ảnh đại diện của bạn.",
+	"apierror-forbidden": "Bị cấm: Bạn không có quyền thay đổi ảnh đại diện của người dùng này.",
+	"apierror-nofile": "Chưa có tập tin nào được cung cấp.",
+	"apierror-ratelimited": "Chưa thể tải lên hình đại diện vào lúc này.",
+	"userprofilev2-avatardeleted": "Đã xóa ảnh đại diện của bạn.",
+	"prefs-profile": "ProfileV2",
+	"aboutme": "Mô tả",
+	"discord": "Discord",
+	"twitter": "Twitter",
+	"mastodon": "Mastodon",
+	"aboutmeplaceholder": "Viết gì đó về bản thân bạn...",
+	"discordplaceholder": "songngu.xyz",
+	"twitterplaceholder": "@songnguxyz",
+	"mastodonplaceholder": "@songngu"
+	"showglobalgroups": "Hiển thị nhóm người dùng toàn cục?",
+	"showglobaleditcount": "Hiển thị số lần sửa đổi toàn cục?",
+	"showglobalgroupshelp": "Hiển thị nhóm người dùng toàn cục mà bạn đang có (công khai cho tất cả mọi người)",
+	"showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục thông qua dữ liệu CentralAuth (công khai cho tất cả mọi người)",
+	"mastodonhelp": "Tên người dùng Mastodon, bao gồm cả @",
+	"twitterhelp": "Tên người dùng Twitter, bao gồm cả @",
+	"discordhelp": "Tên người dùng Discord, bỏ dấu #",
+	"aboutmehelp": "Viết mô tả về bản thân bạn tại đây. Tối đa 200 kí tự."
+}
