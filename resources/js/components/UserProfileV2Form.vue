@@ -1,68 +1,20 @@
 <template>
-	<cdx-field :is-fieldset="true"
-			   :status="status"
-			   :messages="aboutMeErrorMessage">
-		<cdx-text-area
-			v-model="aboutMeValue"
-		></cdx-text-area>
-		<template #label>
-			{{ $i18n('userprofilev2-about-me') }}
-		</template>
-		<template #help-text>
-			<div class="userprofilev2-about-me">
-				<div class="userprofilev2-about-me-help-text">
-					<p>{{ $i18n('userprofilev2-about-me-help') }}</p>
-				</div>
-				<div class="userprofile-v2-about-me-character-counter">
-					{{ charsRemaining }}
-				</div>
-			</div>
-		</template>
-	</cdx-field>
-	<cdx-field :is-fieldset="true">
-		<cdx-text-input
-			v-model="discordUsernameValue"
-			@input="onInputDiscord"
-			@blur="validateDiscord"
-		></cdx-text-input>
-		<template #label>
-			{{ $i18n('userprofilev2-discord') }}
-		</template>
-		<template #help-text>
-			{{ $i18n('userprofilev2-discord-help') }}
-		</template>
-	</cdx-field>
-	<cdx-field :is-fieldset="true">
-		<cdx-text-input
-			v-model="twitterInputValue"
-			@input="onInputTwitter"
-			@blur="validateTwitter"
-		></cdx-text-input>
-		<template #label>
-			{{ $i18n('userprofilev2-twitter') }}
-		</template>
-		<template #help-text>
-			{{ $i18n('userprofilev2-twitter-help') }}
-		</template>
-	</cdx-field>
-	<cdx-field :is-fieldset="true">
-		<cdx-text-input
-			v-model="mastodonInputValue"
-			@input="onInputMastodon"
-			@blur="validateMastodon"
-		></cdx-text-input>
-		<template #label>
-			{{ $i18n('userprofilev2-mastodon') }}
-		</template>
-		<template #help-text>
-			{{ $i18n('userprofilev2-mastodon-help') }}
-		</template>
-	</cdx-field>
+	<about-me-field></about-me-field>
+	<discord-field></discord-field>
+	<twitter-field></twitter-field>
+	<mastodon-field></mastodon-field>
+	<global-edits-checkbox></global-edits-checkbox>
+	<global-groups-checkbox></global-groups-checkbox>
 </template>
 
 <script>
 const {defineComponent, ref, computed} = require('vue');
-
+const aboutMeField = require("./AboutMeField.vue");
+const discordField = require("./DiscordField.vue")
+const twitterField = require("./TwitterField.vue")
+const mastodonField = require("./MastodonField.vue")
+const globalEditsCheckbox = require("./GlobalEditsCheckbox.vue")
+const globalGroupsCheckbox = require("./GlobalGroupsCheckbox.vue")
 const {CdxField, CdxTextInput, CdxTextArea} = require('@wikimedia/codex');
 
 module.exports = defineComponent({
@@ -70,23 +22,13 @@ module.exports = defineComponent({
 	components: {
 		CdxField,
 		CdxTextInput,
-		CdxTextArea
-	},
-	setup() {
-
-		const aboutMeValue = ref('');
-		const MAX_ABOUT_ME_CHARS = 200;
-		const charsRemaining = computed(() => MAX_ABOUT_ME_CHARS - aboutMeValue.value.length);
-		const status = computed(() => charsRemaining.value < 0 ? 'error' : 'default');
-		const aboutMeErrorMessage = {error: 'The about me section must be 200 characters or less.'};
-
-		return {
-			status,
-			charsRemaining,
-			aboutMeValue,
-			aboutMeErrorMessage
-		}
-
+		CdxTextArea,
+		aboutMeField,
+		discordField,
+		twitterField,
+		mastodonField,
+		globalEditsCheckbox,
+		globalGroupsCheckbox
 	}
 });
 </script>

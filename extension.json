@@ -66,7 +66,13 @@
 				"js/init.js",
 				"js/components/App.vue",
 				"js/components/UserProfileV2Modal.vue",
-				"js/components/UserProfileV2Form.vue"
+				"js/components/UserProfileV2Form.vue",
+				"js/components/AboutMeField.vue",
+				"js/components/DiscordField.vue",
+				"js/components/TwitterField.vue",
+				"js/components/MastodonField.vue",
+				"js/components/GlobalEditsCheckbox.vue",
+				"js/components/GlobalGroupsCheckbox.vue"
 			],
 			"dependencies": [
 				"vue",
