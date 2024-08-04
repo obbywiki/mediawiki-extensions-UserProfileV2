@@ -65,7 +65,8 @@
 			"packageFiles": [
 				"js/init.js",
 				"js/components/App.vue",
-				"js/components/UserProfileV2Modal.vue"
+				"js/components/UserProfileV2Modal.vue",
+				"js/components/UserProfileV2Form.vue"
 			],
 			"dependencies": [
 				"vue",

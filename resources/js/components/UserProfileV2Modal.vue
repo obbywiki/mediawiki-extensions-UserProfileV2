@@ -9,12 +9,14 @@
 			@primary="onPrimaryAction"
 			@default="open = false"
 		>
-			<p>Do you want to save your changes?</p>
+			<user-profile-v2-form></user-profile-v2-form>
 		</cdx-dialog>
 	</client-only>
 </template>
 
 <script>
+const UserProfileV2Form = require("./UserProfileV2Form.vue");
+
 const {defineComponent, ref} = require('vue');
 
 const {
@@ -26,7 +28,8 @@ module.exports = defineComponent({
 	name: 'UserProfileV2Dialog',
 	components: {
 		CdxButton,
-		CdxDialog
+		CdxDialog,
+		UserProfileV2Form
 	},
 	setup() {
 		const open = ref(false);
