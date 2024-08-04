@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 		OO.inheritClass(ProcessDialog, OO.ui.ProcessDialog);
 		ProcessDialog.static.name = 'userProfileV2Edit';
-		ProcessDialog.static.title = 'Edit Profile';
+		ProcessDialog.static.title = mw.message('userprofilev2-edit-profile'); //'Edit Profile';
 
 		ProcessDialog.static.actions = [
 			{
@@ -123,16 +123,16 @@ $(document).ready(function () {
 		 */
 		ProcessDialog.prototype.getEditFields = function () {
 			this.aboutMe = new OO.ui.MultilineTextInputWidget({
-				placeholder: 'About Me'
+				placeholder: mw.message('userprofilev2-about-me') //'About Me'
 			});
 			this.discordLink = new OO.ui.TextInputWidget({
-				placeholder: mw.message('discordplaceholder').text()
+				placeholder: mw.message('userprofilev2-discord-placeholder').text()
 			});
 			this.twitterLink = new OO.ui.TextInputWidget({
-				placeholder: mw.message('twitterplaceholder').text()
+				placeholder: mw.message('userprofilev2-twitter-placeholder').text()
 			});
 			this.mastodonLink = new OO.ui.TextInputWidget({
-				placeholder: mw.message('mastodonplaceholder').text()
+				placeholder: mw.message('userprofilev2-mastodon-placeholder').text()
 			});
 			this.showGlobalGroups = new OO.ui.CheckboxInputWidget({
 				selected: false
@@ -142,41 +142,41 @@ $(document).ready(function () {
 			});
 
 			var fieldset = new OO.ui.FieldsetLayout({
-				label: 'Edit Your Profile',
+				label: mw.message('userprofilev2-edit-profile'), //'Edit Your Profile',
 				classes: ['container']
 			});
 
 			fieldset.addItems([
 				new OO.ui.FieldLayout(this.aboutMe, {
-					label: 'About Me',
+					label: mw.message('userprofilev2-about-me'), //'About Me',
 					align: 'top',
-					help: mw.message('aboutmehelp').text(),
+					help: mw.message('userprofilev2-about-me-help').text(),
 					helpInline: true
 				}),
 				new OO.ui.FieldLayout(this.discordLink, {
-					label: mw.message('discord').text(),
+					label: mw.message('userprofilev2-discord').text(),
 					align: 'top',
-					help: mw.message('discordhelp').text()
+					help: mw.message('userprofilev2-discord-help').text()
 				}),
 				new OO.ui.FieldLayout(this.twitterLink, {
-					label: mw.message('twitter').text(),
+					label: mw.message('userprofilev2-twitter').text(),
 					align: 'top',
-					help: mw.message('twitterhelp').text()
+					help: mw.message('userprofilev2-twitter-help').text()
 				}),
 				new OO.ui.FieldLayout(this.mastodonLink, {
-					label: mw.message('mastodon').text(),
+					label: mw.message('userprofilev2-mastodon').text(),
 					align: 'top',
-					help: mw.message('mastodonhelp').text()
+					help: mw.message('userprofilev2-mastodon-help').text()
 				}),
 				new OO.ui.FieldLayout(this.showGlobalGroups, {
-					label: mw.message('showglobalgroups').text(),
+					label: mw.message('userprofilev2-showglobalgroups').text(),
 					align: 'inline',
-					help: mw.message('showglobalgroupshelp').text()
+					help: mw.message('userprofilev2-showglobalgroupshelp').text()
 				}),
 				new OO.ui.FieldLayout(this.showGlobalEditCount, {
-					label: mw.message('showglobaleditcount').text(),
+					label: mw.message('userprofilev2-showglobaleditcount').text(),
 					align: 'inline',
-					help: mw.message('showglobaleditcounthelp').text()
+					help: mw.message('userprofilev2-showglobaleditcounthelp').text()
 				})
 			]);
 
