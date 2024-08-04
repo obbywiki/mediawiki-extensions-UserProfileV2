@@ -276,5 +276,4 @@ class UploadAvatar extends UploadFromFile {
 			}
 		}
 	}
-
 }
