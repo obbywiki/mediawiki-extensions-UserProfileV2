@@ -62,13 +62,14 @@
 	},
 	"ResourceModules": {
 		"ext.userProfileV2.edit": {
-			"scripts": [
-				"js/ext.userProfileV2.edit.js"
+			"packageFiles": [
+				"js/init.js",
+				"js/components/App.vue",
+				"js/components/UserProfileV2Modal.vue"
 			],
 			"dependencies": [
-				"oojs-ui-widgets",
-				"oojs-ui-windows",
-				"oojs-ui-core"
+				"vue",
+				"@wikimedia/codex"
 			],
 			"messages": [
 				"userprofilev2-selectavatar",
