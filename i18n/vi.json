@@ -5,12 +5,12 @@
 		]
 	},
 	"prefs-profile": "UserProfileV2",
-	"userprofilev2-desc": "",
+	"userprofilev2-desc": "Hệ thống hồ sơ người dùng dựa trên nền tảng wiki",
 	"userprofilev2-selectavatar": "Chọn hình đại diện",
 	"userprofilev2-avatarchanged": "Đã thay đổi ảnh đại diện của bạn.",
 	"userprofilev2-avatardeleted": "Đã xóa ảnh đại diện của bạn.",
 	"userprofilev2-user-locked": "Tài khoản người dùng này đã bị khóa toàn cục.",
-	"userprofilev2-edit-profile": "",
+	"userprofilev2-edit-profile": "Sửa đổi hồ sơ",
 	"userprofilev2-apierror-forbidden": "Bị cấm: Bạn không có quyền thay đổi ảnh đại diện của người dùng này.",
 	"userprofilev2-apierror-nofile": "Chưa có tập tin nào được cung cấp.",
 	"userprofilev2-apierror-ratelimited": "Chưa thể tải lên hình đại diện vào lúc này.",
@@ -29,6 +29,6 @@
 	"userprofilev2-discord-help": "Tên người dùng Discord, bỏ dấu #",
 	"userprofilev2-showglobalgroups": "Hiển thị nhóm người dùng toàn cục?",
 	"userprofilev2-showglobaleditcount": "Hiển thị số lần sửa đổi toàn cục?",
-	"userprofilev2-showglobalgroupshelp": "Hiển thị nhóm người dùng toàn cục mà bạn đang có (công khai cho tất cả mọi người)",
-	"userprofilev2-showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục thông qua dữ liệu CentralAuth (công khai cho tất cả mọi người)"	
+	"userprofilev2-showglobalgroupshelp": "Hiển thị nhóm người dùng toàn cục (công khai cho tất cả mọi người)",
+	"userprofilev2-showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục (công khai cho tất cả mọi người)"	
 }
