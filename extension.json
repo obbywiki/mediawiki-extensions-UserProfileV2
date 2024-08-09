@@ -71,12 +71,9 @@
 				"oojs-ui-core"
 			],
 			"messages": [
-				"prefs-profile",
-				"userprofilev2-desc",
 				"userprofilev2-selectavatar",
 				"userprofilev2-avatarchanged",
 				"userprofilev2-avatardeleted",
-				"userprofilev2-user-locked",
 				"userprofilev2-edit-profile",
 				"userprofilev2-apierror-forbidden",
 				"userprofilev2-apierror-nofile",
