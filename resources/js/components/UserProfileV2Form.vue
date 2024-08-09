@@ -5,6 +5,7 @@
 	<mastodon-field></mastodon-field>
 	<global-edits-checkbox></global-edits-checkbox>
 	<global-groups-checkbox></global-groups-checkbox>
+	<file-input-widget :maxSize="5" accept="image/png, image/jpeg"></file-input-widget>
 </template>
 
 <script>
@@ -15,6 +16,7 @@ const twitterField = require("./TwitterField.vue")
 const mastodonField = require("./MastodonField.vue")
 const globalEditsCheckbox = require("./GlobalEditsCheckbox.vue")
 const globalGroupsCheckbox = require("./GlobalGroupsCheckbox.vue")
+const fileInputWidget = require("./FileInputWidget.vue")
 const {CdxField, CdxTextInput, CdxTextArea} = require('@wikimedia/codex');
 
 module.exports = defineComponent({
@@ -28,7 +30,8 @@ module.exports = defineComponent({
 		twitterField,
 		mastodonField,
 		globalEditsCheckbox,
-		globalGroupsCheckbox
+		globalGroupsCheckbox,
+		fileInputWidget
 	}
 });
 </script>

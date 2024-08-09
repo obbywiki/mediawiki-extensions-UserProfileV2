@@ -72,7 +72,8 @@
 				"js/components/TwitterField.vue",
 				"js/components/MastodonField.vue",
 				"js/components/GlobalEditsCheckbox.vue",
-				"js/components/GlobalGroupsCheckbox.vue"
+				"js/components/GlobalGroupsCheckbox.vue",
+				"js/components/FileInputWidget.vue"
 			],
 			"dependencies": [
 				"vue",
