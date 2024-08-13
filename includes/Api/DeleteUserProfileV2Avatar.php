@@ -98,7 +98,7 @@ class DeleteUserProfileV2Avatar extends \ApiBase {
 
 		// if the user has the profilemanager permission, they can remove an avatar
 		// lets not bother with any of the other checks, it doesn't matter
-		if ( $this->permissionManager->userHasRight( $targetUser, 'profilemanager' ) ) {
+		if ( $this->permissionManager->userHasRight( $user, 'profilemanager' ) ) {
 			return true;
 		}
 
