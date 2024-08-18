@@ -433,7 +433,7 @@ $(document).ready(function () {
 		let formData = new FormData();
 		formData.append("action", "userprofilev2uploadavatar");
 		formData.append("format", "json");
-		formData.append("filename", "hello");
+		formData.append("filename", "xyz"); // doesn't matter what we pass here, because it will be overwritten by the API, but the API won't accept the request without a filename.
 		formData.append("token", mw.user.tokens.get('csrfToken'));
 		formData.append("file", fileToUpload);
 		formData.append("username", mw.config.get('wgRelevantUserName'));
