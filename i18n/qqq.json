@@ -1,8 +1,10 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Amire80"
+		]
 	},
-	"prefs-profile": "Preferences section header",
+	"prefs-profile": "{{Optional}}\nPreferences section header",
 	"userprofilev2-desc": "Text that explains the purpose of the extension on Special:Version.",
 	"userprofilev2-selectavatar": "Button text for uploading an avatar.",
 	"userprofilev2-avatarchanged": "Text that displays in a bubble notification when an avatar has been successfully changed.",

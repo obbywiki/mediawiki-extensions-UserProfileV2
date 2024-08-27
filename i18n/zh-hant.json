@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"userprofilev2-desc": "基於 wiki 的使用者個人資料系統。",
+	"userprofilev2-selectavatar": "選擇個人頭像",
+	"userprofilev2-avatarchanged": "成功更換個人頭像。",
+	"userprofilev2-avatardeleted": "成功刪除個人頭像。",
+	"userprofilev2-user-locked": "此名使用者帳號已被全域停用。",
+	"userprofilev2-edit-profile": "編輯您的個人檔案",
+	"userprofilev2-apierror-forbidden": "禁止：您無權更換此個人頭像。",
+	"userprofilev2-apierror-nofile": "沒有提供要上傳的檔案。",
+	"userprofilev2-apierror-ratelimited": "目前您不能上傳圖片。",
+	"userprofilev2-apierror-invalidusername": "在此 wiki 上沒有註冊「$1」這樣名稱的使用者。",
+	"userprofilev2-about-me": "關於我",
+	"userprofilev2-discord": "Discord 使用者名稱",
+	"userprofilev2-twitter": "Twitter 使用者名稱",
+	"userprofilev2-mastodon": "Mastodon 使用者名稱",
+	"userprofilev2-about-me-placeholder": "寫一些關於你自己的事…",
+	"userprofilev2-about-me-help": "告訴我們關於你的事情（最多 200 個字元）。",
+	"userprofilev2-mastodon-help": "您的 Mastodon 使用者名稱（帶有 @ 字元）",
+	"userprofilev2-twitter-help": "您的 Twitter 使用者名稱（帶有 @ 字元）",
+	"userprofilev2-discord-help": "您的 Discord 使用者名稱（帶有 # 字元）",
+	"userprofilev2-showglobalgroups": "顯示我的全域群組？",
+	"userprofilev2-showglobaleditcount": "顯示我的全域編輯計數？",
+	"userprofilev2-showglobalgroupshelp": "顯示我所屬的全域使用者群組（所有人都能看到）",
+	"userprofilev2-showglobaleditcounthelp": "顯示我來自 CentralAuth 的全域編輯計數（所有人都能看到）"
+}

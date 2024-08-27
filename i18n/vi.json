@@ -1,10 +1,9 @@
-{   
-    "@metadata": {
+{
+	"@metadata": {
 		"authors": [
 			"SongNgu.xyz"
 		]
 	},
-	"prefs-profile": "UserProfileV2",
 	"userprofilev2-desc": "Hệ thống hồ sơ người dùng dựa trên nền tảng wiki",
 	"userprofilev2-selectavatar": "Chọn hình đại diện",
 	"userprofilev2-avatarchanged": "Đã thay đổi ảnh đại diện của bạn.",
@@ -20,9 +19,6 @@
 	"userprofilev2-twitter": "Twitter",
 	"userprofilev2-mastodon": "Mastodon",
 	"userprofilev2-about-me-placeholder": "Viết gì đó về bản thân bạn...",
-	"userprofilev2-discord-placeholder": "songngu.xyz",
-	"userprofilev2-twitter-placeholder": "@songnguxyz",
-	"userprofilev2-mastodon-placeholder": "@songngu",
 	"userprofilev2-about-me-help": "Viết mô tả về bản thân bạn tại đây. Tối đa 200 kí tự.",
 	"userprofilev2-mastodon-help": "Tên người dùng Mastodon, bao gồm cả @",
 	"userprofilev2-twitter-help": "Tên người dùng Twitter, bao gồm cả @",
@@ -30,5 +26,5 @@
 	"userprofilev2-showglobalgroups": "Hiển thị nhóm người dùng toàn cục?",
 	"userprofilev2-showglobaleditcount": "Hiển thị số lần sửa đổi toàn cục?",
 	"userprofilev2-showglobalgroupshelp": "Hiển thị nhóm người dùng toàn cục (công khai cho tất cả mọi người)",
-	"userprofilev2-showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục (công khai cho tất cả mọi người)"	
+	"userprofilev2-showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục (công khai cho tất cả mọi người)"
 }

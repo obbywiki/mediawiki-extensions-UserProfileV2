@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Volvox"
+		]
+	},
+	"userprofilev2-desc": "E wikibaséierte Benotzerprofilsystem.",
+	"userprofilev2-selectavatar": "Avatar eraussichen",
+	"userprofilev2-avatarchanged": "Avatar erfollegräich geännert.",
+	"userprofilev2-avatardeleted": "Avatar erfollegräich geläscht.",
+	"userprofilev2-edit-profile": "Äre Profil änneren",
+	"userprofilev2-about-me": "Iwwer mech",
+	"userprofilev2-discord": "Discord-Benotzernumm",
+	"userprofilev2-twitter": "Twitter-Benotzernumm",
+	"userprofilev2-mastodon": "Mastodon-Benotzernumm",
+	"userprofilev2-about-me-placeholder": "Schreift eppes iwwer Iech...",
+	"userprofilev2-mastodon-help": "Äre Mastodon-Benotzernumm, mam @",
+	"userprofilev2-twitter-help": "Ären Twitter-Benotzernumm, mam @",
+	"userprofilev2-discord-help": "Ären Discord-Benotzernumm, ouni den #"
+}
