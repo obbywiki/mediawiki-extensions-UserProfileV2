@@ -37,17 +37,19 @@ module.exports = defineComponent({
 		 * input is empty/has not been changed.
 		 */
 		const validateInput = () => {
-			if (isDirty.value && !mastodonInputValue.value.includes('@')) {
-				mastodonErrorMessage.value = {error: 'The Mastodon username must contain an @.'};
-			} else {
-				mastodonErrorMessage.value = {error: ''};
+			if (isDirty.value) {
+				if (!mastodonInputValue.value) {
+					mastodonErrorMessage.value = { error: '' }; // Clear error if input is empty
+				} else if (!regex.test(mastodonInputValue.value)) {
+					mastodonErrorMessage.value = { error: 'The Mastodon username must contain an @.' };
+				} else {
+					mastodonErrorMessage.value = { error: '' }; // Clear error if input is valid
+				}
 			}
 		};
 
 		const status = computed(() => {
-			return isDirty.value && mastodonErrorMessage.value && !regex.test(mastodonErrorMessage.value)
-				? 'error'
-				: 'default';
+			return isDirty.value && mastodonErrorMessage.value.error ? 'error' : 'default';
 		});
 
 		return {
