@@ -42,7 +42,7 @@ class UploadUserProfileV2Avatar extends ApiBase {
 		$user = $this->getUser();
 
 		if ( !UploadBase::isAllowed( $user ) ) {
-			$this->dieWithError( [ 'apierror-forbidden' ] ); // forbidden from uploading
+			$this->dieWithError( [ 'userprofilev2-apierror-forbidden' ] ); // forbidden from uploading
 		}
 
 		$params = $this->extractRequestParams();
@@ -52,7 +52,7 @@ class UploadUserProfileV2Avatar extends ApiBase {
 		$permissions = $this->checkPermissions( $user, $targetUser );
 
 		if ( !$permissions ) {
-			$this->dieWithError( [ 'apierror-forbidden', wfEscapeWikiText( $targetUser->getName() ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-forbidden', wfEscapeWikiText( $targetUser->getName() ) ] );
 		}
 
 		$params['file'] = $this->getRequest()->getFileName( 'file' );
@@ -67,11 +67,11 @@ class UploadUserProfileV2Avatar extends ApiBase {
 
 		// if we do not have an upload, lets just die
 		if ( !isset( $upload ) ) {
-			$this->dieWithError( [ 'apierror-nofile' ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-nofile' ] );
 		}
 
 		if ( UploadBase::isThrottled( $user ) ) {
-			$this->dieWithError( 'apierror-ratelimited' );
+			$this->dieWithError( 'userprofilev2-apierror-ratelimited' );
 		}
 
 		$status = $upload->performUpload( '', '', false, $user );
@@ -140,7 +140,7 @@ class UploadUserProfileV2Avatar extends ApiBase {
 		$user = $this->userFactory->newFromName( $username );
 
 		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $username ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-invalidusername', wfEscapeWikiText( $username ) ] );
 		}
 
 		return $user;

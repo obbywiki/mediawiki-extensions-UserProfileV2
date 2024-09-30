@@ -70,7 +70,7 @@ class QueryUserProfileV2 extends ApiQueryBase {
 		$user = $this->getUserFromName( $userName );
 
 		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $userName ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-invalidusername', wfEscapeWikiText( $userName ) ] );
 		}
 
 		$userPreferences = [];

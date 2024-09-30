@@ -36,36 +36,36 @@ class Hooks implements
 		// add the about me preference
 		$preferences['profile-aboutme'] = [
 			'type' => 'textarea',
-			'label-message' => 'aboutme',
+			'label-message' => 'userprofilev2-about-me',
 			'section' => 'personal/profile',
 			'rows' => 6,
 			'maxlength' => 200,
-			'placeholder' => wfMessage( 'aboutmeplaceholder' )->plain(),
-			'help-message' => 'aboutmehelp',
+			'placeholder' => wfMessage( 'userprofilev2-about-me-placeholder' )->plain(),
+			'help-message' => 'userprofilev2-about-me-help',
 		];
 
 		$preferences['profile-discord'] = [
 			'type' => 'text',
-			'label-message' => 'discord',
+			'label-message' => 'userprofilev2-discord',
 			'section' => 'personal/profile',
-			'placeholder' => wfMessage( 'discordplaceholder' )->plain(),
-			'help-message' => 'discordhelp',
+			'placeholder' => wfMessage( 'userprofilev2-discord-placeholder' )->plain(),
+			'help-message' => 'userprofilev2-discord-help',
 		];
 
 		$preferences['profile-twitter'] = [
 			'type' => 'text',
-			'label-message' => 'twitter',
+			'label-message' => 'userprofilev2-twitter',
 			'section' => 'personal/profile',
-			'placeholder' => wfMessage( 'twitterplaceholder' )->plain(),
-			'help-message' => 'twitterhelp',
+			'placeholder' => wfMessage( 'userprofilev2-twitter-placeholder' )->plain(),
+			'help-message' => 'userprofilev2-twitter-help',
 		];
 
 		$preferences['profile-mastodon'] = [
 			'type' => 'text',
-			'label-message' => 'mastodon',
+			'label-message' => 'userprofilev2-mastodon',
 			'section' => 'personal/profile',
-			'placeholder' => wfMessage( 'mastodonplaceholder' )->plain(),
-			'help-message' => 'mastodonhelp',
+			'placeholder' => wfMessage( 'userprofilev2-mastodon-placeholder' )->plain(),
+			'help-message' => 'userprofilev2-mastodon-help',
 		];
 
 		if ( ExtensionRegistry::getInstance()->isLoaded( 'CentralAuth' ) ) {

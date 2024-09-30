@@ -40,7 +40,7 @@ class SetUserProfileV2Preferences extends ApiBase {
 		$user = $this->getTargetUser( $userName );
 
 		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $userName ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-invalidusername', wfEscapeWikiText( $userName ) ] );
 		}
 
 		// if the user is not trying to change their own preferences, and isn't a profile manager, die.
@@ -106,5 +106,4 @@ class SetUserProfileV2Preferences extends ApiBase {
 			]
 		];
 	}
-
 }

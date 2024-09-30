@@ -37,13 +37,13 @@ class DeleteUserProfileV2Avatar extends \ApiBase {
 		$user = $this->getUser();
 
 		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-notregistered' ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-notregistered' ] );
 		}
 
 		$canRemoveAvatar = $this->checkPermissions( $user, $targetUser );
 
 		if ( !$canRemoveAvatar ) {
-			$this->dieWithError( [ 'apierror-cannotremoveavatar', wfEscapeWikiText( $targetUser->getName() ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-cannotremoveavatar', wfEscapeWikiText( $targetUser->getName() ) ] );
 		}
 
 		$avatarKey = 'avatar';
@@ -125,7 +125,7 @@ class DeleteUserProfileV2Avatar extends \ApiBase {
 		$user = $this->userFactory->newFromName( $username );
 
 		if ( !$user->isRegistered() ) {
-			$this->dieWithError( [ 'apierror-invalidusername', wfEscapeWikiText( $username ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-invalidusername', wfEscapeWikiText( $username ) ] );
 		}
 
 		return $user;

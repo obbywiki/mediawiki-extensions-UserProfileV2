@@ -1,3 +1,5 @@
+[![Gitlab Contributors](https://img.shields.io/gitlab/contributors/telepedia%2Fextensions%2Fuserprofilev2?style=flat-square&logo=gitlab)]() [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg?style=flat-square)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) [![MediaWiki: >=1.41](https://img.shields.io/badge/MediaWiki-%3E%3D1.41-%2336c?style=flat-square&logo=Wikipedia)](https://www.mediawiki.org)
+
 UserProfileV2 is a MediaWiki extension for displaying User Profiles in MediaWiki. It was built to replace SocialProfile,
 which is a big mess, hence the name "V2" — could've just called it SocialProfileV2?
 
