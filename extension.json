@@ -62,13 +62,22 @@
 	},
 	"ResourceModules": {
 		"ext.userProfileV2.edit": {
-			"scripts": [
-				"js/ext.userProfileV2.edit.js"
+			"packageFiles": [
+				"js/init.js",
+				"js/components/App.vue",
+				"js/components/UserProfileV2Modal.vue",
+				"js/components/UserProfileV2Form.vue",
+				"js/components/AboutMeField.vue",
+				"js/components/DiscordField.vue",
+				"js/components/TwitterField.vue",
+				"js/components/MastodonField.vue",
+				"js/components/GlobalEditsCheckbox.vue",
+				"js/components/GlobalGroupsCheckbox.vue",
+				"js/components/FileInputWidget.vue"
 			],
 			"dependencies": [
-				"oojs-ui-widgets",
-				"oojs-ui-windows",
-				"oojs-ui-core"
+				"vue",
+				"@wikimedia/codex"
 			],
 			"messages": [
 				"userprofilev2-selectavatar",
