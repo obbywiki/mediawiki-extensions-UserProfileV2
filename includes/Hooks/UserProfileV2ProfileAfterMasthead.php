@@ -4,7 +4,7 @@ namespace Telepedia\UserProfileV2\Hooks;
 
 use MediaWiki\User\User;
 
-interface UserProfileV2OnProfileAfterMasthead {
+interface UserProfileV2ProfileAfterMasthead {
 
 	/**
 	 * This hook runs after the header has been generated, and before the main user profile content is shown
@@ -14,6 +14,6 @@ interface UserProfileV2OnProfileAfterMasthead {
 	 * @param &$html html output of the masthead
 	 * @return void
 	 */
-	public function onUserProfileV2OnProfileAfterMasthead( User $user, &$html ): void;
+	public function onUserProfileV2ProfileAfterMasthead( User $user, &$html ): void;
 
 }

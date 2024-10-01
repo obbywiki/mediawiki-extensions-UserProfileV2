@@ -274,7 +274,7 @@ class UserPage extends Article {
 		 * Run our hook which modifies the output after the masthead and before the contents.
 		 */
 		$hookRunner = MediaWikiServices::getInstance()->get( 'UserProfileV2HookRunner' );
-		$hookRunner->onUserProfileV2OnProfileAfterMasthead( $this->mUserProfile, $html );
+		$hookRunner->onUserProfileV2ProfileAfterMasthead( $this->mUserProfile, $html );
 
 		return $html;
 	}

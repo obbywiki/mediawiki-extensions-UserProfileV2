@@ -5,7 +5,7 @@ namespace Telepedia\UserProfileV2\Hooks;
 use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\User\User;
 
-class UserProfileV2HookRunner implements UserProfileV2OnProfileAfterMasthead {
+class UserProfileV2HookRunner implements UserProfileV2ProfileAfterMasthead {
 
 	private $container;
 
@@ -16,9 +16,9 @@ class UserProfileV2HookRunner implements UserProfileV2OnProfileAfterMasthead {
 	/**
 	 * This hook runs after the masthead contents and before the user profile text
 	 */
-	public function onUserProfileV2OnProfileAfterMasthead( User $user, &$html ): void {
+	public function onUserProfileV2ProfileAfterMasthead( User $user, &$html ): void {
 		$this->container->run(
-			'UserProfileV2OnProfileAfterMasthead',
+			'UserProfileV2ProfileAfterMasthead',
 			[ $user, &$html ]
 		);
 	}
