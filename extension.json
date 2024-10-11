@@ -71,6 +71,8 @@
 				"oojs-ui-core"
 			],
 			"messages": [
+				"cancel",
+				"help",
 				"userprofilev2-selectavatar",
 				"userprofilev2-avatarchanged",
 				"userprofilev2-avatardeleted",
@@ -94,7 +96,12 @@
 				"userprofilev2-showglobalgroups",
 				"userprofilev2-showglobalgroupshelp",
 				"userprofilev2-showglobaleditcount",
-				"userprofilev2-showglobaleditcounthelp"
+				"userprofilev2-showglobaleditcounthelp",
+				"userprofilev2-edit-back",
+				"userprofilev2-editavatar",
+				"userprofilev2-deleteavatar",
+				"userprofilev2-helptext",
+				"savechanges"
 			]
 		},
 		"ext.userProfileV2.styles": {

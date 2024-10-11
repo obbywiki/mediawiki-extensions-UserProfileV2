@@ -188,7 +188,7 @@ class UserPage extends Article {
 			$html .= Html::element(
 				"button",
 				[ "class" => "mw-ui-button mw-ui-progressive", "id" => 'userProfileV2-edit' ],
-				"Edit"
+				$this->context->msg( 'userprofilev2-edit' )->text()
 			);
 		}
 
@@ -208,19 +208,27 @@ class UserPage extends Article {
 			[ 'class' => 'profile-header-statistics' ]
 		);
 
+		// get edit counts and put it in the string — Pisces
+		$userEdits = $this->context->msg( 'userprofilev2-edit-count' )
+				->numParams( $this->mUserProfile->getEditCount() )
+				->text();
+		
 		$html .= Html::rawElement(
 			"li",
 			[],
-			"<strong>{$this->mUserProfile->getEditCount()}</strong> edits"
+			$userEdits
 		);
-
-		$globalEditCount = $userInformation->getGlobalEditCount();
-
+		
+		// same but for global edits — Pisces
 		if ( $userInformation->shouldShowGlobalEditCount() && $globalEditCount !== null ) {
+			$userGlobalEdits = $this->context->msg( 'userprofilev2-globaledit-count' )
+				->numParams( $userInformation->getGlobalEditCount() )
+				->text();
+			
 			$html .= Html::rawElement(
 				"li",
 				[],
-				"<strong>{$globalEditCount}</strong> global edits"
+				$userGlobalEdits
 			);
 		}
 

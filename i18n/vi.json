@@ -4,6 +4,7 @@
 			"SongNgu.xyz"
 		]
 	},
+	"prefs-profile": "UserProfileV2",
 	"userprofilev2-desc": "Hệ thống hồ sơ người dùng dựa trên nền tảng wiki",
 	"userprofilev2-selectavatar": "Chọn hình đại diện",
 	"userprofilev2-avatarchanged": "Đã thay đổi ảnh đại diện của bạn.",
@@ -26,5 +27,12 @@
 	"userprofilev2-showglobalgroups": "Hiển thị nhóm người dùng toàn cục?",
 	"userprofilev2-showglobaleditcount": "Hiển thị số lần sửa đổi toàn cục?",
 	"userprofilev2-showglobalgroupshelp": "Hiển thị nhóm người dùng toàn cục (công khai cho tất cả mọi người)",
-	"userprofilev2-showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục (công khai cho tất cả mọi người)"
+	"userprofilev2-showglobaleditcounthelp": "Hiển thị số lần sửa đổi toàn cục (công khai cho tất cả mọi người)",
+	"userprofilev2-edit": "Sửa",
+	"userprofilev2-edit-count": "<strong>$1</strong> Sửa đổi",
+	"userprofilev2-globaledit-count": "<strong>$1</strong> Sửa đổi toàn cục",
+	"userprofilev2-editavatar": "Tải lên hình đại diện",
+	"userprofilev2-edit-back": "Trở lại",
+	"userprofilev2-deleteavatar": "Gỡ hình đại diện",
+	"userprofilev2-helptext": "Hãy sử dụng giao diện này để cập nhật trang hồ sơ của bạn."
 }

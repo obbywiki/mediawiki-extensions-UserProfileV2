@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Amire80"
+			"Amire80",
+			"SongNgu.xyz"
 		]
 	},
 	"prefs-profile": "{{Optional}}\nPreferences section header",
@@ -30,5 +31,12 @@
 	"userprofilev2-showglobalgroups": "Label text for checkbox that toggles whether global groups are shown on a profile.",
 	"userprofilev2-showglobaleditcount": "Label text for checkbox that toggles whether global edits are shown on a profile.",
 	"userprofilev2-showglobalgroupshelp": "Help text for checkbox that toggles whether global groups are shown on a profile.",
-	"userprofilev2-showglobaleditcounthelp": "Help text for checkbox that toggles whether global edits are shown on a profile."
+	"userprofilev2-showglobaleditcounthelp": "Help text for checkbox that toggles whether global edits are shown on a profile.",
+	"userprofilev2-edit": "Label text for profile edit button",
+	"userprofilev2-edit-count": "User edit counter",
+	"userprofilev2-globaledit-count": "User global edit counter",
+	"userprofilev2-editavatar": "Label text for avatar edit popup.",
+	"userprofilev2-edit-back": "Alt text for the back buttons in certain places in the profile edit popup.",
+	"userprofilev2-deleteavatar": "Label text for the avatar delete button.",
+	"userprofilev2-helptext": "Help text for the profile editing interface."
 }
