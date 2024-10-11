@@ -10,29 +10,29 @@ $(document).ready(function () {
 
 		OO.inheritClass(ProcessDialog, OO.ui.ProcessDialog);
 		ProcessDialog.static.name = 'userProfileV2Edit';
-		ProcessDialog.static.title = mw.message('userprofilev2-edit-profile'); //'Edit Profile';
+		ProcessDialog.static.title = mw.message('userprofilev2-edit-profile').text(); //'Edit Profile';
 
 		ProcessDialog.static.actions = [
 			{
 				action: 'continue',
 				modes: 'edit',
-				label: 'Save',
+				label: mw.message('savechanges').text(),
 				flags: ['primary', 'progressive']
 			},
 			{
 				action: 'help',
 				modes: 'edit',
-				label: 'Help'
+				label: mw.message('help').text()
 			},
 			{
 				modes: 'edit',
-				label: 'Cancel',
+				label: mw.message('cancel').text(),
 				flags: ['safe', 'close']
 			},
 			{
 				action: 'back',
 				modes: 'help',
-				label: 'Back',
+				label: mw.message('userprofilev2-edit-back'),
 				flags: ['safe', 'back']
 			}
 		];
@@ -46,7 +46,7 @@ $(document).ready(function () {
 			this.panel1 = new OO.ui.PanelLayout({padded: true, expanded: false});
 			this.addFieldsToPanel(this.panel1);
 			this.panel2 = new OO.ui.PanelLayout({padded: true, expanded: false});
-			this.panel2.$element.append('<p>Use this dialog to change the contents of your user profile.</p>');
+			this.panel2.$element.append('<p>', mw.message('userprofilev2-helptext').text() ,'</p>');
 			this.stackLayout = new OO.ui.StackLayout({
 				items: [this.panel1, this.panel2]
 			});
@@ -198,12 +198,12 @@ $(document).ready(function () {
 
 		OO.inheritClass(UserAvatarDialog, OO.ui.ProcessDialog);
 		UserAvatarDialog.static.name = 'Edit Avatar';
-		UserAvatarDialog.static.title = 'Edit Avatar';
+		UserAvatarDialog.static.title = mw.message('userprofilev2-editavatar').text();
 
 		UserAvatarDialog.static.actions = [
-			{action: 'save', label: 'Save', flags: ['primary', 'progressive']},
-			{action: 'delete', label: 'Delete Avatar', flags: ['primary', 'destructive']},
-			{label: 'Cancel', flags: ['safe', 'close']}
+			{action: 'save', label: mw.message('savechanges').text(), flags: ['primary', 'progressive']},
+			{action: 'delete', label: mw.message('userprofilev2-deleteavatar').text(), flags: ['primary', 'destructive']},
+			{label: mw.message('cancel').text(), flags: ['safe', 'close']}
 		];
 
 		UserAvatarDialog.prototype.initialize = function () {
