@@ -222,8 +222,8 @@ class UserPage extends Article {
 			[],
 			$userEdits
 		);
-		
-		if ( $userInformation->shouldShowGlobalEditCount() && $globalEditCount !== null ) {			
+
+		if ( $userInformation->shouldShowGlobalEditCount() && $userGlobalEdits !== null ) {
 			$html .= Html::rawElement(
 				"li",
 				[],
