@@ -212,19 +212,18 @@ class UserPage extends Article {
 		$userEdits = $this->context->msg( 'userprofilev2-edit-count' )
 				->numParams( $this->mUserProfile->getEditCount() )
 				->text();
-		
+
+		$userGlobalEdits = $this->context->msg( 'userprofilev2-globaledit-count' )
+		->numParams( $userInformation->getGlobalEditCount() )
+		->text();
+
 		$html .= Html::rawElement(
 			"li",
 			[],
 			$userEdits
 		);
 		
-		// same but for global edits — Pisces
-		if ( $userInformation->shouldShowGlobalEditCount() && $globalEditCount !== null ) {
-			$userGlobalEdits = $this->context->msg( 'userprofilev2-globaledit-count' )
-				->numParams( $userInformation->getGlobalEditCount() )
-				->text();
-			
+		if ( $userInformation->shouldShowGlobalEditCount() && $globalEditCount !== null ) {			
 			$html .= Html::rawElement(
 				"li",
 				[],
