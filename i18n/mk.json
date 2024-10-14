@@ -27,5 +27,12 @@
 	"userprofilev2-showglobalgroups": "Да се прикажуваат моите глобални групи?",
 	"userprofilev2-showglobaleditcount": "Да се прикажува мојот број на глобални уредувања?",
 	"userprofilev2-showglobalgroupshelp": "Прикажува глобални кориснички групи во кои членувам (ќе биде видливо за сите)",
-	"userprofilev2-showglobaleditcounthelp": "Прикажувај го бројот на моите глобални уредувања од CentralAuth (ќе биде видливо за сите)"
+	"userprofilev2-showglobaleditcounthelp": "Прикажувај го бројот на моите глобални уредувања од CentralAuth (ќе биде видливо за сите)",
+	"userprofilev2-edit": "Уреди",
+	"userprofilev2-edit-count": "<strong>$1</strong> уредувања",
+	"userprofilev2-globaledit-count": "<strong>$1</strong> глобални уредувања",
+	"userprofilev2-editavatar": "Уреди аватар",
+	"userprofilev2-edit-back": "Назад",
+	"userprofilev2-deleteavatar": "Избриши аватар",
+	"userprofilev2-helptext": "Послужете се со овој дијалог за да ја измените содржината на вашиот кориснички профил."
 }

@@ -26,5 +26,12 @@
 	"userprofilev2-showglobalgroups": "Monstrar mi gruppos global?",
 	"userprofilev2-showglobaleditcount": "Monstrar mi numero global de modificationes?",
 	"userprofilev2-showglobalgroupshelp": "Monstrar le gruppos global del quales io face parte (essera visibile pro omnes)",
-	"userprofilev2-showglobaleditcounthelp": "Monstrar mi numero global de modificationes de CentralAuth (essera visibile pro omnes)"
+	"userprofilev2-showglobaleditcounthelp": "Monstrar mi numero global de modificationes de CentralAuth (essera visibile pro omnes)",
+	"userprofilev2-edit": "Modificar",
+	"userprofilev2-edit-count": "<strong>$1</strong> modificationes",
+	"userprofilev2-globaledit-count": "<strong>$1</strong> modificationes global",
+	"userprofilev2-editavatar": "Modificar avatar",
+	"userprofilev2-edit-back": "Retornar",
+	"userprofilev2-deleteavatar": "Deler avatar",
+	"userprofilev2-helptext": "Usa iste dialogo pro cambiar le contento de tu profilo de usator."
 }
