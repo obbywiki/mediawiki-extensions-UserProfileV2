@@ -27,5 +27,12 @@
 	"userprofilev2-showglobalgroups": "Mijn globale groepen weergeven?",
 	"userprofilev2-showglobaleditcount": "Mijn globale aantal bewerkingen weergeven?",
 	"userprofilev2-showglobalgroupshelp": "De globale gebruikersgroepen waarvan ik deel uitmaak weergeven (ze worden voor iedereen zichtbaar)",
-	"userprofilev2-showglobaleditcounthelp": "Mijn globale aantal bewerkingen van CentralAuth weergeven (het wordt voor iedereen zichtbaar)"
+	"userprofilev2-showglobaleditcounthelp": "Mijn globale aantal bewerkingen van CentralAuth weergeven (het wordt voor iedereen zichtbaar)",
+	"userprofilev2-edit": "Bewerken",
+	"userprofilev2-edit-count": "<strong>$1</strong> bewerkingen",
+	"userprofilev2-globaledit-count": "<strong>$1</strong> globale bewerkingen",
+	"userprofilev2-editavatar": "Avatar bewerken",
+	"userprofilev2-edit-back": "Terug",
+	"userprofilev2-deleteavatar": "Avatar verwijderen",
+	"userprofilev2-helptext": "Met dit dialoogvenster kunt u de inhoud van uw gebruikersprofiel wijzigen."
 }
