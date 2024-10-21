@@ -12,5 +12,7 @@
 	"userprofilev2-apierror-ratelimited": "आप इस समय इमेज अपलोड नहीं कर सकते।",
 	"userprofilev2-about-me": "मेरे बारे में",
 	"userprofilev2-twitter": "ट्विटर उपयोगकर्ता नाम",
-	"userprofilev2-about-me-placeholder": "अपने बारे में कुछ लिखें..."
+	"userprofilev2-about-me-placeholder": "अपने बारे में कुछ लिखें...",
+	"userprofilev2-edit": "सम्पादन",
+	"userprofilev2-edit-back": "पीछे"
 }
