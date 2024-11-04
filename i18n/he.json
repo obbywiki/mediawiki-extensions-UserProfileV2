@@ -27,5 +27,12 @@
 	"userprofilev2-showglobalgroups": "להציג את הקבוצות הגלובליות שלי?",
 	"userprofilev2-showglobaleditcount": "הצגת ספירת עריכות גלובלית?",
 	"userprofilev2-showglobalgroupshelp": "להציג קבוצות משתמשים גלובליות שאני חלק מהן (יהיו גלויות לכולם)",
-	"userprofilev2-showglobaleditcounthelp": "להציג את ספירת העריכות הגלובלית שלי מ־CentralAuth (תהיה גלויה לכולם)"
+	"userprofilev2-showglobaleditcounthelp": "להציג את ספירת העריכות הגלובלית שלי מ־CentralAuth (תהיה גלויה לכולם)",
+	"userprofilev2-edit": "עריכה",
+	"userprofilev2-edit-count": "{{PLURAL:$1|עריכה <strong>אחת</strong>|<strong>$1</strong> עריכות}}",
+	"userprofilev2-globaledit-count": "{{PLURAL:$1|עריכה גלובלית <strong>אחת</strong>|<strong>$1</strong> עריכות גלובליות}}",
+	"userprofilev2-editavatar": "עריכת תמונה מייצגת",
+	"userprofilev2-edit-back": "חזרה",
+	"userprofilev2-deleteavatar": "מחיקת תמונה מייצגת",
+	"userprofilev2-helptext": "בתיבת הדו־שיח הזאת אפשר לשנות את התוכן של פרופיל המשתמש שלך."
 }

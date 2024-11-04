@@ -2,16 +2,20 @@
 	"@metadata": {
 		"authors": [
 			"Alien333",
-			"Goombiis"
+			"Goombiis",
+			"Mahabarata"
 		]
 	},
+	"userprofilev2-desc": "Un système de profil utilisateur basé sur wiki.",
 	"userprofilev2-selectavatar": "Sélectionner un avatar",
 	"userprofilev2-avatarchanged": "Avatar modifié avec succès.",
 	"userprofilev2-avatardeleted": "Avatar supprimé avec succès.",
 	"userprofilev2-user-locked": "Ce compte utilisateur a été désactivé globalement.",
 	"userprofilev2-edit-profile": "Modifier votre profil",
+	"userprofilev2-apierror-forbidden": "Interdit : vous n'avez pas la permission de modifier cet avatar.",
 	"userprofilev2-apierror-nofile": "Aucun fichier n'a été fourni pour téléchargement.",
 	"userprofilev2-apierror-ratelimited": "Vous ne pouvez pas télécharger d'images pour le moment.",
+	"userprofilev2-apierror-invalidusername": "Aucun utilisateur n'est enregistré avec le nom d'utilisateur « $1 » sur ce wiki.",
 	"userprofilev2-about-me": "À propos de moi",
 	"userprofilev2-discord": "Nom d'utilisateur Discord",
 	"userprofilev2-twitter": "Nom d'utilisateur Twitter",
@@ -23,6 +27,8 @@
 	"userprofilev2-discord-help": "Votre nom d'utilisateur Discord, sans le #",
 	"userprofilev2-showglobalgroups": "Afficher mes groupes globaux ?",
 	"userprofilev2-showglobaleditcount": "Afficher mon nombre global de modifications ?",
+	"userprofilev2-showglobalgroupshelp": "Afficher les groupes d'utilisateurs mondiaux dont je fais partie (seront visibles par tous)",
+	"userprofilev2-showglobaleditcounthelp": "Afficher mon nombre total de modifications depuis CentralAuth (sera visible par tous)",
 	"userprofilev2-edit": "Modifier",
 	"userprofilev2-edit-count": "<strong>$1</strong> Modifications",
 	"userprofilev2-globaledit-count": "<strong>$1</strong> Modifications globales",
