@@ -45,7 +45,7 @@ class SetUserProfileV2Preferences extends ApiBase {
 
 		// if the user is not trying to change their own preferences, and isn't a profile manager, die.
 		if ( $actionUser->getId() !== $user->getId() && !$this->getPermissionManager()->userHasRight( $actionUser, 'profile-manage' ) ) {
-			$this->dieWithError( [ 'api-error-permission', wfEscapeWikiText( $userName ) ] );
+			$this->dieWithError( [ 'userprofilev2-apierror-invalidpermission', wfEscapeWikiText( $userName ) ] );
 		}
 
 		$userInformation = new UserInformation( $user );
