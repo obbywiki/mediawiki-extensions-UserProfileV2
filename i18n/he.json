@@ -12,6 +12,7 @@
 	"userprofilev2-user-locked": "חשבון משתמש זה הושבת באופן גלובלי.",
 	"userprofilev2-edit-profile": "עריכת הפרופיל שלך",
 	"userprofilev2-apierror-forbidden": "הגישה נחסמה: אין לך הרשאה לשנות את התמונה המייצגת הזאת.",
+	"userprofilev2-apierror-invalidpermission": "אסור: אין לך הרשאה לערוך את הפרופיל של $1",
 	"userprofilev2-apierror-nofile": "לא נבחר קובץ להעלאה.",
 	"userprofilev2-apierror-ratelimited": "לא ניתן להעלות תמונות כרגע.",
 	"userprofilev2-apierror-invalidusername": "אין משתמש רשום עם שם המשתמש \"$1\" בוויקי הזה.",

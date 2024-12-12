@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
+			"McDutchie",
 			"SongNgu.xyz"
 		]
 	},
@@ -13,10 +14,10 @@
 	"userprofilev2-user-locked": "Warning message shown on profile of a user profile when their account is locked via CentralAuth.",
 	"userprofilev2-edit-profile": "Button text for editing your profile details.",
 	"userprofilev2-apierror-forbidden": "Error message returned by the API when a user doesn't have permission to change an avatar.",
+	"userprofilev2-apierror-invalidpermission": "Error message returned when a user doesn’t have permission to edit another user’s profile information.",
 	"userprofilev2-apierror-nofile": "Error message returned by the API when someone tried to change an avatar but no file was sent with the request.",
 	"userprofilev2-apierror-ratelimited": "Error message returned by the API when someone is rate limited from uploading images.",
 	"userprofilev2-apierror-invalidusername": "Error message returned by the API when someone tried to change the profile of a non-existing user.",
-	"userprofilev2-apierror-invalidpermission": "Error message returned when a user doesn't have the permission to edit another users profile information.",
 	"userprofilev2-about-me": "Label text for \"about me\" input box",
 	"userprofilev2-discord": "Label text for \"discord\" input box",
 	"userprofilev2-twitter": "Label text for \"twitter\" input box",

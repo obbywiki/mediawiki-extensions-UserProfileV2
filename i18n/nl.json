@@ -12,6 +12,7 @@
 	"userprofilev2-user-locked": "Dit gebruikersaccount is globaal uitgeschakeld.",
 	"userprofilev2-edit-profile": "Uw profiel aanpassen",
 	"userprofilev2-apierror-forbidden": "Verboden: u hebt geen toestemming om deze avatar te wijzigen.",
+	"userprofilev2-apierror-invalidpermission": "Verboden: u hebt geen toestemming om het profiel van $1 te bewerken",
 	"userprofilev2-apierror-nofile": "Er is geen bestand gegeven om te uploaden.",
 	"userprofilev2-apierror-ratelimited": "U kunt op dit moment geen afbeeldingen uploaden.",
 	"userprofilev2-apierror-invalidusername": "Er is op deze wiki geen gebruiker geregistreerd met de gebruikersnaam ‘$1’.",
