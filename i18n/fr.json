@@ -13,6 +13,7 @@
 	"userprofilev2-user-locked": "Ce compte utilisateur a été désactivé globalement.",
 	"userprofilev2-edit-profile": "Modifier votre profil",
 	"userprofilev2-apierror-forbidden": "Interdit : vous n'avez pas la permission de modifier cet avatar.",
+	"userprofilev2-apierror-invalidpermission": "Interdit : vous n'avez pas la permission de modifier le profil de $1",
 	"userprofilev2-apierror-nofile": "Aucun fichier n'a été fourni pour téléchargement.",
 	"userprofilev2-apierror-ratelimited": "Vous ne pouvez pas télécharger d'images pour le moment.",
 	"userprofilev2-apierror-invalidusername": "Aucun utilisateur n'est enregistré avec le nom d'utilisateur « $1 » sur ce wiki.",

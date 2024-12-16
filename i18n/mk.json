@@ -12,6 +12,7 @@
 	"userprofilev2-user-locked": "Оваа корисничка сметка е глобално оневозможена.",
 	"userprofilev2-edit-profile": "Уредете си го профилот",
 	"userprofilev2-apierror-forbidden": "Забрането: немате дозвола да го менувате овој аватар.",
+	"userprofilev2-apierror-invalidpermission": "Забрането: немате дозвола да го уредувате профилот на $1",
 	"userprofilev2-apierror-nofile": "Немате укажано податотека за подигање.",
 	"userprofilev2-apierror-ratelimited": "Во моментов не можете да подигате слики.",
 	"userprofilev2-apierror-invalidusername": "Нема корисник по име „$1“ на ова вики.",
