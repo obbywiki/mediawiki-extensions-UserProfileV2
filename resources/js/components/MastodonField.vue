@@ -1,34 +1,34 @@
 <template>
-	<cdx-field :is-fieldset="true" :status="status" :messages="mastodonErrorMessage">
+	<cdx-field :status="status" :messages="mastodonErrorMessage">
 		<cdx-text-input
 			v-model="mastodonInputValue"
 			@focus="isDirty = true"
 			@blur="validateInput"
 		></cdx-text-input>
 		<template #label>
-			{{ $i18n('userprofilev2-mastodon') }}
+			{{ $i18n( "userprofilev2-mastodon" ) }}
 		</template>
 		<template #help-text>
-			{{ $i18n('userprofilev2-mastodon-help') }}
+			{{ $i18n( "userprofilev2-mastodon-help" ) }}
 		</template>
 	</cdx-field>
 </template>
 
 <script>
 
-const {defineComponent, ref, computed} = require('vue');
-const {CdxField, CdxTextInput} = require('@wikimedia/codex');
+const { defineComponent, ref, computed } = require( "vue" );
+const { CdxField, CdxTextInput } = require( "@wikimedia/codex" );
 
-module.exports = defineComponent({
-	name: 'MastodonField',
+module.exports = defineComponent( {
+	name: "MastodonField",
 	components: {
 		CdxField,
-		CdxTextInput,
+		CdxTextInput
 	},
 	setup() {
-		const mastodonInputValue = ref('');
-		const isDirty = ref(false);
-		const mastodonErrorMessage = ref({error: 'The Mastodon username must contain an @.'});
+		const mastodonInputValue = ref( "" );
+		const isDirty = ref( false );
+		const mastodonErrorMessage = ref( { error: "The Mastodon username must contain an @." } );
 		const regex = /@/;
 
 		/**
@@ -39,18 +39,18 @@ module.exports = defineComponent({
 		const validateInput = () => {
 			if (isDirty.value) {
 				if (!mastodonInputValue.value) {
-					mastodonErrorMessage.value = { error: '' }; // Clear error if input is empty
-				} else if (!regex.test(mastodonInputValue.value)) {
-					mastodonErrorMessage.value = { error: 'The Mastodon username must contain an @.' };
+					mastodonErrorMessage.value = { error: "" }; // Clear error if input is empty
+				} else if (!regex.test( mastodonInputValue.value )) {
+					mastodonErrorMessage.value = { error: "The Mastodon username must contain an @." };
 				} else {
-					mastodonErrorMessage.value = { error: '' }; // Clear error if input is valid
+					mastodonErrorMessage.value = { error: "" }; // Clear error if input is valid
 				}
 			}
 		};
 
-		const status = computed(() => {
-			return isDirty.value && mastodonErrorMessage.value.error ? 'error' : 'default';
-		});
+		const status = computed( () => {
+			return isDirty.value && mastodonErrorMessage.value.error ? "error" : "default";
+		} );
 
 		return {
 			status,
@@ -60,7 +60,7 @@ module.exports = defineComponent({
 			validateInput
 		};
 	}
-});
+} );
 
 </script>
 

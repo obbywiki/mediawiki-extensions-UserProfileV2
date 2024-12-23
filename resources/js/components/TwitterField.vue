@@ -1,34 +1,34 @@
 <template>
-	<cdx-field :is-fieldset="true" :status="status" :messages="twitterErrorMessage">
+	<cdx-field :status="status" :messages="twitterErrorMessage">
 		<cdx-text-input
 			v-model="twitterInputValue"
 			@focus="isDirty = true"
 			@blur="validateInput"
 		></cdx-text-input>
 		<template #label>
-			{{ $i18n('userprofilev2-twitter') }}
+			{{ $i18n( "userprofilev2-twitter" ) }}
 		</template>
 		<template #help-text>
-			{{ $i18n('userprofilev2-twitter-help') }}
+			{{ $i18n( "userprofilev2-twitter-help" ) }}
 		</template>
 	</cdx-field>
 </template>
 
 <script>
 
-const {defineComponent, ref, computed} = require('vue');
-const {CdxField, CdxTextInput} = require('@wikimedia/codex');
+const { defineComponent, ref, computed } = require( "vue" );
+const { CdxField, CdxTextInput } = require( "@wikimedia/codex" );
 
-module.exports = defineComponent({
-	name: 'TwitterField',
+module.exports = defineComponent( {
+	name: "TwitterField",
 	components: {
 		CdxField,
-		CdxTextInput,
+		CdxTextInput
 	},
 	setup() {
-		const twitterInputValue = ref('');
-		const isDirty = ref(false);
-		const twitterErrorMessage = ref({error: 'The Twitter username must contain an @.'});
+		const twitterInputValue = ref( "" );
+		const isDirty = ref( false );
+		const twitterErrorMessage = ref( { error: "The Twitter username must contain an @." } );
 		const regex = /@/;
 
 		/**
@@ -37,18 +37,18 @@ module.exports = defineComponent({
 		 * input is empty/has not been changed.
 		 */
 		const validateInput = () => {
-			if (isDirty.value && !twitterInputValue.value.includes('@')) {
-				twitterErrorMessage.value = {error: 'The Twitter username must contain an @.'};
+			if (isDirty.value && !twitterInputValue.value.includes( "@" )) {
+				twitterErrorMessage.value = { error: "The Twitter username must contain an @." };
 			} else {
-				twitterErrorMessage.value = {error: ''};
+				twitterErrorMessage.value = { error: "" };
 			}
 		};
 
-		const status = computed(() => {
-			return isDirty.value && twitterInputValue.value && !regex.test(twitterInputValue.value)
-				? 'error'
-				: 'default';
-		});
+		const status = computed( () => {
+			return isDirty.value && twitterInputValue.value && !regex.test( twitterInputValue.value )
+				? "error"
+				: "default";
+		} );
 
 		return {
 			status,
@@ -58,7 +58,7 @@ module.exports = defineComponent({
 			validateInput
 		};
 	}
-});
+} );
 
 </script>
 

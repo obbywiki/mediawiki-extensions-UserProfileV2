@@ -9,13 +9,13 @@
 module.exports = exports = {
 	name: "UserProfileV2",
 	components: {
-		UserProfileV2Modal: require('./UserProfileV2Modal.vue')
+		UserProfileV2Modal: require( "./UserProfileV2Modal.vue" )
 	},
 	data() {
-		const button = document.getElementById('userProfileV2-edit')
-		button.addEventListener('click', function () {
-			console.log('Button, clicked!');
-		});
+		const button = document.getElementById( "userProfileV2-edit" );
+		button.addEventListener( "click", function () {
+			console.log( "Button, clicked!" );
+		} );
 	}
-}
+};
 </script>

@@ -9,18 +9,18 @@
 </template>
 
 <script>
-const {defineComponent, ref, computed} = require('vue');
-const aboutMeField = require("./AboutMeField.vue");
-const discordField = require("./DiscordField.vue")
-const twitterField = require("./TwitterField.vue")
-const mastodonField = require("./MastodonField.vue")
-const globalEditsCheckbox = require("./GlobalEditsCheckbox.vue")
-const globalGroupsCheckbox = require("./GlobalGroupsCheckbox.vue")
-const fileInputWidget = require("./FileInputWidget.vue")
-const {CdxField, CdxTextInput, CdxTextArea} = require('@wikimedia/codex');
+const { defineComponent, ref, computed } = require( "vue" );
+const aboutMeField = require( "./AboutMeField.vue" );
+const discordField = require( "./DiscordField.vue" );
+const twitterField = require( "./TwitterField.vue" );
+const mastodonField = require( "./MastodonField.vue" );
+const globalEditsCheckbox = require( "./GlobalEditsCheckbox.vue" );
+const globalGroupsCheckbox = require( "./GlobalGroupsCheckbox.vue" );
+const fileInputWidget = require( "./FileInputWidget.vue" );
+const { CdxField, CdxTextInput, CdxTextArea } = require( "@wikimedia/codex" );
 
-module.exports = defineComponent({
-	name: 'UserProfileV2Form',
+module.exports = defineComponent( {
+	name: "UserProfileV2Form",
 	components: {
 		CdxField,
 		CdxTextInput,
@@ -32,8 +32,12 @@ module.exports = defineComponent({
 		globalEditsCheckbox,
 		globalGroupsCheckbox,
 		fileInputWidget
+	},
+	props: {
+		userData: { type: Object, required: true }
 	}
-});
+
+} );
 </script>
 
 <style lang="less">
