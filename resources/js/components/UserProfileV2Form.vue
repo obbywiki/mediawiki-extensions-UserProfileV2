@@ -1,6 +1,6 @@
 <template>
 	<about-me-field
-		:model-value="userData['profile-aboutme']"
+		:model-value="userData['profile-aboutme'] || ''"
 		@update:model-value="updateField('profile-aboutme', $event)"
 	></about-me-field>
 	<discord-field

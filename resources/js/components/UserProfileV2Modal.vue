@@ -34,7 +34,7 @@ module.exports = defineComponent( {
 	},
 	setup() {
 		const open = ref( false );
-		const userData = ref( null );
+		const userData = ref( {} );
 
 		const primaryAction = {
 			label: "Save",
@@ -68,7 +68,7 @@ module.exports = defineComponent( {
 				} )
 				.catch( ( error ) => {
 					console.error( "API request failed:", error );
-					userData.value = null;
+					userData.value = {};
 				} );
 		} );
 
