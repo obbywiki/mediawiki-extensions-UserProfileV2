@@ -8,7 +8,10 @@
 		@primary="onPrimaryAction"
 		@default="open = false"
 	>
-		<user-profile-v2-form :user-data="userData"></user-profile-v2-form>
+		<user-profile-v2-form
+			:user-data="userData"
+			@update:user-data="userData = $event"
+		></user-profile-v2-form>
 	</cdx-dialog>
 </template>
 
@@ -44,7 +47,9 @@ module.exports = defineComponent( {
 
 		const button = document.getElementById( "userProfileV2-edit" );
 		button.addEventListener( "click", function () {
-			open.value = true;
+			if (userData.value) {
+				open.value = true;
+			}
 		} );
 
 		const api = new mw.Api();

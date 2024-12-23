@@ -1,8 +1,9 @@
 <template>
 	<cdx-field :status="status" :messages="twitterErrorMessage">
 		<cdx-text-input
-			v-model="twitterInputValue"
+			:model-value="modelValue"
 			@focus="isDirty = true"
+			@update:model-value="$emit('update:modelValue', $event)"
 			@blur="validateInput"
 		></cdx-text-input>
 		<template #label>
@@ -16,7 +17,7 @@
 
 <script>
 
-const { defineComponent, ref, computed } = require( "vue" );
+const { defineComponent, ref, computed, watch } = require( "vue" );
 const { CdxField, CdxTextInput } = require( "@wikimedia/codex" );
 
 module.exports = defineComponent( {
@@ -25,8 +26,14 @@ module.exports = defineComponent( {
 		CdxField,
 		CdxTextInput
 	},
-	setup() {
-		const twitterInputValue = ref( "" );
+	props: {
+		modelValue: {
+			type: String,
+			default: ""
+		}
+	},
+	emits: [ "update:modelValue" ],
+	setup( props ) {
 		const isDirty = ref( false );
 		const twitterErrorMessage = ref( { error: "The Twitter username must contain an @." } );
 		const regex = /@/;
@@ -37,7 +44,7 @@ module.exports = defineComponent( {
 		 * input is empty/has not been changed.
 		 */
 		const validateInput = () => {
-			if (isDirty.value && !twitterInputValue.value.includes( "@" )) {
+			if (isDirty.value && !props.modelValue.includes( "@" )) {
 				twitterErrorMessage.value = { error: "The Twitter username must contain an @." };
 			} else {
 				twitterErrorMessage.value = { error: "" };
@@ -45,14 +52,15 @@ module.exports = defineComponent( {
 		};
 
 		const status = computed( () => {
-			return isDirty.value && twitterInputValue.value && !regex.test( twitterInputValue.value )
+			return isDirty.value && props.modelValue && !regex.test( props.modelValue )
 				? "error"
 				: "default";
 		} );
 
+		watch( () => props.modelValue, validateInput );
+
 		return {
 			status,
-			twitterInputValue,
 			twitterErrorMessage,
 			isDirty,
 			validateInput

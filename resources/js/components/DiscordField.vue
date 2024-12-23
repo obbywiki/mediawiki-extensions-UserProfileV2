@@ -1,7 +1,8 @@
 <template>
 	<cdx-field :status="status" :messages="discordErrorMessage">
 		<cdx-text-input
-			v-model="discordInputValue"
+			:model-value="modelValue"
+			@update:model-value="$emit('update:modelValue', $event)"
 		></cdx-text-input>
 		<template #label>
 			{{ $i18n( "userprofilev2-discord" ) }}
@@ -14,7 +15,7 @@
 
 <script>
 
-const { defineComponent, ref, computed } = require( "vue" );
+const { defineComponent, ref, computed, watch } = require( "vue" );
 const { CdxField, CdxTextInput } = require( "@wikimedia/codex" );
 
 module.exports = defineComponent( {
@@ -23,17 +24,21 @@ module.exports = defineComponent( {
 		CdxField,
 		CdxTextInput
 	},
-	setup() {
-
-		const discordInputValue = ref( "" );
+	props: {
+		modelValue: {
+			type: String,
+			default: ""
+		}
+	},
+	emits: [ "update:modelValue" ],
+	setup( props ) {
 		const discordErrorMessage = { error: "The Discord username must not contain a #." };
 		const regex = /#/;
 
-		const status = computed( () => regex.test( discordInputValue.value ) ? "error" : "default" );
+		const status = computed( () => regex.test( props.modelValue ) ? "error" : "default" );
 
 		return {
 			status,
-			discordInputValue,
 			discordErrorMessage
 		};
 

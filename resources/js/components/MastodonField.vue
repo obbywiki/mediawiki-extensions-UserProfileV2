@@ -1,7 +1,8 @@
 <template>
 	<cdx-field :status="status" :messages="mastodonErrorMessage">
 		<cdx-text-input
-			v-model="mastodonInputValue"
+			:model-value="modelValue"
+			@update:model-value="$emit('update:modelValue', $event)"
 			@focus="isDirty = true"
 			@blur="validateInput"
 		></cdx-text-input>
@@ -15,8 +16,7 @@
 </template>
 
 <script>
-
-const { defineComponent, ref, computed } = require( "vue" );
+const { defineComponent, ref, computed, watch } = require( "vue" );
 const { CdxField, CdxTextInput } = require( "@wikimedia/codex" );
 
 module.exports = defineComponent( {
@@ -25,25 +25,26 @@ module.exports = defineComponent( {
 		CdxField,
 		CdxTextInput
 	},
-	setup() {
-		const mastodonInputValue = ref( "" );
+	props: {
+		modelValue: {
+			type: String,
+			default: ""
+		}
+	},
+	emits: [ "update:modelValue" ],
+	setup( props ) {
 		const isDirty = ref( false );
-		const mastodonErrorMessage = ref( { error: "The Mastodon username must contain an @." } );
+		const mastodonErrorMessage = ref( { error: "" } );
 		const regex = /@/;
 
-		/**
-		 * Validate the input and only fire the error message if the input is dirty
-		 * A 'dirty' input is one that has been altered; this avoids firing the error if the
-		 * input is empty/has not been changed.
-		 */
 		const validateInput = () => {
 			if (isDirty.value) {
-				if (!mastodonInputValue.value) {
-					mastodonErrorMessage.value = { error: "" }; // Clear error if input is empty
-				} else if (!regex.test( mastodonInputValue.value )) {
+				if (!props.modelValue) {
+					mastodonErrorMessage.value = { error: "" };
+				} else if (!regex.test( props.modelValue )) {
 					mastodonErrorMessage.value = { error: "The Mastodon username must contain an @." };
 				} else {
-					mastodonErrorMessage.value = { error: "" }; // Clear error if input is valid
+					mastodonErrorMessage.value = { error: "" };
 				}
 			}
 		};
@@ -52,18 +53,15 @@ module.exports = defineComponent( {
 			return isDirty.value && mastodonErrorMessage.value.error ? "error" : "default";
 		} );
 
+		// Add watch to validate when prop changes
+		watch( () => props.modelValue, validateInput );
+
 		return {
 			status,
-			mastodonInputValue,
 			mastodonErrorMessage,
 			isDirty,
 			validateInput
 		};
 	}
 } );
-
 </script>
-
-<style lang="less">
-
-</style>
