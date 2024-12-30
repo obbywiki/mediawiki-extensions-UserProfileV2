@@ -11,6 +11,7 @@
 	"userprofilev2-user-locked": "Iste conto de usator ha essite disactivate globalmente.",
 	"userprofilev2-edit-profile": "Modificar tu profilo",
 	"userprofilev2-apierror-forbidden": "Prohibite: tu non ha le permission de cambiar iste avatar.",
+	"userprofilev2-apierror-invalidpermission": "Prohibite: tu non ha le permission de modificar le profilo de $1",
 	"userprofilev2-apierror-nofile": "Necun file a incargar ha essite fornite.",
 	"userprofilev2-apierror-ratelimited": "Tu non pote incargar files in iste momento.",
 	"userprofilev2-apierror-invalidusername": "Necun usator con le nomine ‘$1’ es registrate sur iste wiki.",

@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Corn Pig",
 			"铁桶"
 		]
 	},
@@ -11,6 +12,7 @@
 	"userprofilev2-user-locked": "此用户账号已被全域禁用。",
 	"userprofilev2-edit-profile": "编辑您的个人资料",
 	"userprofilev2-apierror-forbidden": "禁止：您没有权限更改此头像。",
+	"userprofilev2-apierror-invalidpermission": "禁止：您没有权限编辑$1的个人资料",
 	"userprofilev2-apierror-nofile": "没有提供要上传的文件。",
 	"userprofilev2-apierror-ratelimited": "您当前不可以上传图片。",
 	"userprofilev2-apierror-invalidusername": "此wiki上尚无以用户名为“$1”注册的用户。",
