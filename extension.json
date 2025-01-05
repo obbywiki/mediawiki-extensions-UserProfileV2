@@ -108,7 +108,12 @@
 			"class": "Telepedia\\UserProfileV2\\UserProfileV2Module",
 			"styles": [
 				"css/ext.userProfileV2.less"
-			]
+			],
+			"skinStyles": {
+				"timeless": [
+					"css/skins/timeless.less"
+				]
+			}
 		}
 	},
 	"APIListModules": {
