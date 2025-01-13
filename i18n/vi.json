@@ -12,6 +12,7 @@
 	"userprofilev2-user-locked": "Tài khoản người dùng này đã bị khóa toàn cục.",
 	"userprofilev2-edit-profile": "Sửa đổi hồ sơ",
 	"userprofilev2-apierror-forbidden": "Bị cấm: Bạn không có quyền thay đổi ảnh đại diện của người dùng này.",
+	"userprofilev2-apierror-invalidpermission": "Bị cấm: bạn không có quyền sửa đổi hồ sơ của $1",
 	"userprofilev2-apierror-nofile": "Chưa có tập tin nào được cung cấp.",
 	"userprofilev2-apierror-ratelimited": "Chưa thể tải lên hình đại diện vào lúc này.",
 	"userprofilev2-apierror-invalidusername": "Không có người dùng '$1' tại wiki này.",
