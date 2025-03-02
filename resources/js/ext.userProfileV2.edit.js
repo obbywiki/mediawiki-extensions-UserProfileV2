@@ -97,10 +97,6 @@ $(document).ready(function () {
 						'profile-show-globaledits': dialog.showGlobalEditCount.isSelected() ? '1' : ''
 					};
 
-					// fire a hook when the submission occurs
-					// so that anyone can change the data passed to the API
-					mw.hook('telepedia.upv2.profileSubmission').fire( formData );
-
 					// Submit data to API
 					return submitUserData(formData).then(function () {
 						dialog.close({action: action});

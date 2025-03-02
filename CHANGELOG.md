@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. 
 
+## v1.0.4
+
+### Bug Fixes
+
+* `mw.hook('telepedia.upv2.profileSubmission')`: remove the hook added in v1.0.3 as that seems like a security issue. Potentially to be reintroduced in the future and restricted to those with the `profilemanager` right.
+  
 ## v1.0.3
 
 ### New Features
