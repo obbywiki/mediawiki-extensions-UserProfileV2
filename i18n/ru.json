@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac",
+			"Yurina Tatiana"
+		]
+	},
+	"userprofilev2-about-me": "О себе",
+	"userprofilev2-discord": "Имя пользователя Discord",
+	"userprofilev2-twitter": "Имя пользователя в Twitter",
+	"userprofilev2-mastodon": "Имя пользователя Mastodon",
+	"userprofilev2-about-me-placeholder": "Напишите что-нибудь о себе...",
+	"userprofilev2-edit": "Править",
+	"userprofilev2-editavatar": "Изменить аватар",
+	"userprofilev2-edit-back": "Назад",
+	"userprofilev2-deleteavatar": "Удалить аватар"
+}
