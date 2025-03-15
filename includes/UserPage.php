@@ -169,7 +169,10 @@ class UserPage extends Article {
 			foreach ( $groups as $group ) {
 				$html .= Html::element(
 					"span",
-					[ 'class' => 'profile-user-group' ],
+					[ 
+						'class' => 'profile-user-group',
+						'data-group' => $group
+				    ],
 					ucfirst( $this->context->msg( "group-{$group}-member" ) )
 				);
 			}
